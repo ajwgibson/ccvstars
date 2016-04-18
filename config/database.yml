@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: ccvstars_production
-  username: ccvstars
-  password: <%= ENV['ccvstars_DATABASE_PASSWORD'] %>
+  database: <%= ENV['CCVSTARS_DATABASE'] %>
+  username: <%= ENV['CCVSTARS_DATABASE_USER'] %>
+  password: <%= ENV['CCVSTARS_DATABASE_PASSWORD'] %>
