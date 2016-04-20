@@ -47,6 +47,7 @@ group :development, :test do
   # RSpec etc
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_girl_rails'
+  gem 'faker'
 end
 
 group :development do
@@ -55,6 +56,9 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Run specs automatically on file changes
+  gem 'guard-rspec', require: false
 end
 
 group :test do
