@@ -13,11 +13,7 @@
             <dt>Last name</dt>         
             <dd><%= @child.last_name %></dd>
             <dt>Date of birth</dt>                     
-            <dd>
-              <% if @child.date_of_birth then %> 
-                <span class="date-of-birth"><%= l(@child.date_of_birth, :format => :short) %> </span>
-              <% end %>
-            </dd>
+            <dd><%= date_of_birth(@child) %> </dd>
             <dt>Age</dt>                 
             <dd><span class="age"><%= @child.age %> </span></dd>
             <dt>Update required?</dt>                   

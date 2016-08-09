@@ -23,11 +23,7 @@
               <% @children.each do |child| %>
                 <tr>
                   <td><%= child.name %> </td>
-                  <td>
-                    <% if child.date_of_birth then %> 
-                    <span class="date-of-birth"><%= l(child.date_of_birth, :format => :short) %> </span>
-                    <% end %>
-                  </td>
+                  <td><%= date_of_birth(child) %> </td>
                   <td><span class="age"><%= child.age %> </span></td>
                   <td> 
                     <% if child.update_required then %> 
