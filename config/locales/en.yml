@@ -20,6 +20,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  TrueClass: "Yes"
+  FalseClass: "No"
   date:
     formats:
       short: "%d-%m-%Y"

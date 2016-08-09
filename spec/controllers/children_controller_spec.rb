@@ -35,4 +35,23 @@ RSpec.describe ChildrenController, type: :controller do
 
   end
 
+  describe "GET #show" do
+    
+    let(:child) { FactoryGirl.create(:child) }
+
+    it "shows a child" do
+      get :show, {id: child.id}
+      expect(response).to render_template :show
+      expect(response).to have_http_status(:success) 
+      expect(assigns(:child).id).to eq(child.id)
+    end
+
+    it "raises an exception for a missing child" do
+      assert_raises(ActiveRecord::RecordNotFound) do
+        get :show, {id: 99}
+      end
+    end
+
+  end
+
 end

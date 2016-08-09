@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   devise_for :users
 
   get 'charts/index'
-  get 'children/index'
+  
+  resources :children
+
   get 'registrations/index'
 
 end

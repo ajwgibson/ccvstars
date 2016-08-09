@@ -1,0 +1,44 @@
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h3><%= @child.last_name %>, <%= @child.first_name %></h3>
+        </div>
+        <div class="ibox-content">
+          <dl class="dl-horizontal">
+            <dt>First name</dt>             
+            <dd><%= @child.first_name %></dd>
+            <dt>Last name</dt>         
+            <dd><%= @child.last_name %></dd>
+            <dt>Date of birth</dt>                     
+            <dd>
+              <% if @child.date_of_birth then %> 
+                <span class="date-of-birth"><%= l(@child.date_of_birth, :format => :short) %> </span>
+              <% end %>
+            </dd>
+            <dt>Age</dt>                 
+            <dd><span class="age"><%= @child.age %> </span></dd>
+            <dt>Update required?</dt>                   
+            <dd><%= t(@child.update_required.class) %></dd>
+            <dt>Medical information</dt> 
+            <dd><%= @child.medical_information %></dd>
+            <dt>Ministry tracker Id</dt>
+            <dd><%= @child.ministry_tracker_id %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h3>Actions</h3>
+        </div>
+        <div class="ibox-content">
+          <%= link_to 'Back to children', children_path, class: 'btn btn-default' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
