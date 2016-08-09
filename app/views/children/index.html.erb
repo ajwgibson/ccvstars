@@ -11,8 +11,7 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Last name </th>
-                  <th>First name </th>
+                  <th>Name </th>
                   <th>Date of birth </th>
                   <th>Age </th>
                   <th>Flags </th>
@@ -23,8 +22,7 @@
               <tbody>
               <% @children.each do |child| %>
                 <tr>
-                  <td><%= child.last_name %> </td>
-                  <td><%= child.first_name %> </td>
+                  <td><%= child.name %> </td>
                   <td>
                     <% if child.date_of_birth then %> 
                     <span class="date-of-birth"><%= l(child.date_of_birth, :format => :short) %> </span>

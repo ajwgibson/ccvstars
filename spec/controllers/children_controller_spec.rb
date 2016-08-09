@@ -17,16 +17,16 @@ RSpec.describe ChildrenController, type: :controller do
     end
 
     it "populates an array of children" do
-      child = FactoryGirl.create(:child)
+      child = FactoryGirl.create(:default_child)
       get :index
       expect(assigns(:children)).to eq([child])
     end
 
     it "orders the children by last_name then first_name" do
 
-      riley_gibson = FactoryGirl.create(:child, :last_name => 'Gibson', :first_name => 'Riley')
-      daniel_pavey = FactoryGirl.create(:child, :last_name => 'Pavey',  :first_name => 'Daniel')
-      erin_gibson  = FactoryGirl.create(:child, :last_name => 'Gibson', :first_name => 'Erin')
+      riley_gibson = FactoryGirl.create(:default_child, :last_name => 'Gibson', :first_name => 'Riley')
+      daniel_pavey = FactoryGirl.create(:default_child, :last_name => 'Pavey',  :first_name => 'Daniel')
+      erin_gibson  = FactoryGirl.create(:default_child, :last_name => 'Gibson', :first_name => 'Erin')
 
       get :index
 
@@ -37,7 +37,7 @@ RSpec.describe ChildrenController, type: :controller do
 
   describe "GET #show" do
     
-    let(:child) { FactoryGirl.create(:child) }
+    let(:child) { FactoryGirl.create(:default_child) }
 
     it "shows a child" do
       get :show, {id: child.id}

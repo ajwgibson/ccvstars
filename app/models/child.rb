@@ -9,4 +9,11 @@ class Child < ActiveRecord::Base
       result = result - 1 if Date.today < date_of_birth + result.years
       result
     end
+
+    def name
+      result = "#{last_name}, #{first_name}"
+      result = result.chomp(', ')
+      result = result.reverse.chomp(',').reverse
+      result.strip
+    end
 end

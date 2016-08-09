@@ -6,13 +6,13 @@ RSpec.describe "children/index.html.erb", type: :view do
   context 'when a child has a date of birth' do
 
     it 'displays the date using the format dd-mm-yyyy' do
-      assign(:children, [FactoryGirl.create(:child, :date_of_birth => Date.new(2016, 6, 3))])
+      assign(:children, [FactoryGirl.create(:default_child, :date_of_birth => Date.new(2016, 6, 3))])
       render
       expect(rendered).to have_css(".date-of-birth", text: "03-06-2016")
     end
 
     it "displays the child's age" do
-      assign(:children, [FactoryGirl.create(:child, :date_of_birth => Date.today - 4.years)])
+      assign(:children, [FactoryGirl.create(:default_child, :date_of_birth => Date.today - 4.years)])
       render
       expect(rendered).to have_css(".age", text: "4")
     end
