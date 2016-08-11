@@ -11,9 +11,11 @@
  * file per style scope.
  *
  *= require_self
+ *= require children
  *= require font-awesome
  *= require animate/animate.css
  *= require inspinia
+ *= require datapicker/datepicker3.css
  */
 
 .nav-header {

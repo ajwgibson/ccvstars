@@ -54,4 +54,61 @@ RSpec.describe ChildrenController, type: :controller do
 
   end
 
+  describe "GET #new" do
+
+    it "renders a blank form" do
+      get :new
+      expect(assigns(:child).id).to be_nil
+    end
+
+  end
+
+  describe "POST #create" do
+
+    context "with valid data" do
+
+      def post_child
+        post :create, { child: FactoryGirl.attributes_for(:default_child) }
+      end
+
+      it "creates a new child" do
+        expect {
+          post_child
+        }.to change(Child, :count).by(1)
+      end
+
+      it "redirects to the show action" do
+        post_child
+        expect(response).to redirect_to(child_path(assigns(:child)))
+      end
+
+      it "set a flash message" do
+        post_child
+        expect(flash[:notice]).to eq('Child was created successfully.')
+      end
+
+    end
+
+    context "with invalid data" do
+
+      def post_child
+        post :create, { child: FactoryGirl.attributes_for(:child, :first_name => 'Riley') }
+      end
+
+      it "does not create a new child" do
+        expect {
+          post_child
+        }.to_not change(Child, :count)
+      end
+
+      it "re-renders the form with the posted data" do
+        post_child
+        expect(response).to render_template(:new)
+        expect(assigns(:child).first_name).to eq('Riley')
+      end
+
+    end
+
+  end
+
 end

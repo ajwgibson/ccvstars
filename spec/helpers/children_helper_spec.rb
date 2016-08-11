@@ -17,7 +17,7 @@ RSpec.describe ChildrenHelper, type: :helper do
     it "outputs the date of birth in a short format" do
       child = FactoryGirl.build(:default_child, :date_of_birth => Date.new(2016, 6, 3))
       output = helper.date_of_birth(child)
-      expect(output).to have_selector("span.date-of-birth", text: "03-06-2016")
+      expect(output).to have_selector("span.date-of-birth", text: "03/06/2016")
     end
 
     context "when a record has no date of birth" do
