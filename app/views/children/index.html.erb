@@ -29,11 +29,11 @@
                   <td><%= date_of_birth(child) %> </td>
                   <td><span class="age"><%= child.age %> </span></td>
                   <td> 
-                    <% if child.update_required then %> 
+                    <% if child.update_required? then %> 
                     <span class="update-details-warning fa fa-edit" 
                           data-toggle="tooltip" title="Update required"> </span> 
                     <% end %>
-                    <% if child.medical_information then %> 
+                    <% if child.medical_information? then %> 
                     <span class="medical-warning text-danger fa fa-medkit" 
                           data-toggle="tooltip" title="Medical information available"> </span> 
                     <% end %>

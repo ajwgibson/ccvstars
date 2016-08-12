@@ -11,6 +11,8 @@ class ChildrenController < ApplicationController
   # GET /children/new
   def new
     @child = Child.new
+    @heading = "Add a child"
+    render :form
   end
 
 
@@ -22,7 +24,28 @@ class ChildrenController < ApplicationController
     if @child.save
       redirect_to @child, notice: 'Child was created successfully.'
     else
-      render :new
+      @heading = "Add a child"
+      render :form
+    end
+
+  end
+
+
+  # GET /children/edit
+  def edit
+    @heading = "Edit a child"
+    render :form
+  end
+
+
+  # PATCH/PUT /children
+  def update
+
+    if @child.update(child_params)
+      redirect_to @child, notice: 'Child was updated successfully.'
+    else
+      @heading = "Edit a child"
+      render :form
     end
 
   end
