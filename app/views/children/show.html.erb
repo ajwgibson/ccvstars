@@ -33,10 +33,14 @@
         </div>
         <div class="ibox-content">
           <div>
-            <%= link_to 'Edit details', edit_child_path, class: 'btn btn-primary' %>
+            <%= link_to edit_child_path, :class => 'btn btn-primary' do %>
+              <i class="fa fa-edit"></i> Edit details
+            <% end %>
           </div>
           <div>
-            <%= link_to 'Back to children', children_path, class: 'btn btn-default' %>
+            <%= link_to children_path, :class => 'btn btn-default' do %>
+              <i class="fa fa-reply"></i> Back to children
+            <% end %>
           </div>
         </div>
       </div>

@@ -8,7 +8,9 @@
         </div>
         <div class="ibox-content">
           <div style="margin-bottom: 20px;">
-            <%= link_to 'Add a child', new_child_path, :class => 'btn btn-primary' %>
+            <%= link_to new_child_path, :class => 'btn btn-primary' do %>
+              <i class="fa fa-plus"></i> Add a child
+            <% end %>
           </div>
           <div class="table-responsive">
             <table class="table table-striped">
@@ -39,7 +41,11 @@
                     <% end %>
                   </td>
                   <td><%= child.ministry_tracker_id %> </td>
-                  <td><%= link_to 'Details', child_path(child) %> </td>
+                  <td>
+                    <%= link_to child_path(child), :class => '' do %> 
+                      <i class="fa fa-info-circle"></i> View details
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
               </tbody>
