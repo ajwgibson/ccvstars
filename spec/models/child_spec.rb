@@ -6,6 +6,75 @@ RSpec.describe Child, type: :model do
     expect(FactoryGirl.build(:default_child)).to be_valid
   end
 
+
+  #
+  # Scope tests
+  #
+
+  describe 'scope:with_first_name' do
+    it 'includes children whose first name matches the value' do
+
+      aaa       = FactoryGirl.create(:default_child, :first_name => 'aaa')
+      bbbaaa    = FactoryGirl.create(:default_child, :first_name => 'bbbaaa')
+      bbbaaaccc = FactoryGirl.create(:default_child, :first_name => 'bbbaaaccc')
+      zzz       = FactoryGirl.create(:default_child, :first_name => 'zzz')
+
+      filtered = Child.with_first_name('aaa')
+
+      expect(filtered).to include(aaa, bbbaaa, bbbaaaccc)
+      expect(filtered).not_to include(zzz)
+    end
+
+    it 'ignores case' do
+      aAa       = FactoryGirl.create(:default_child, :first_name => 'aAa')
+
+      filtered = Child.with_first_name('aaa')
+
+      expect(filtered).to include(aAa)
+    end
+  end
+
+  describe 'scope:with_last_name' do
+    it 'includes children whose last name matches the value' do
+
+      aaa       = FactoryGirl.create(:default_child, :last_name => 'aaa')
+      bbbaaa    = FactoryGirl.create(:default_child, :last_name => 'bbbaaa')
+      bbbaaaccc = FactoryGirl.create(:default_child, :last_name => 'bbbaaaccc')
+      zzz       = FactoryGirl.create(:default_child, :last_name => 'zzz')
+
+      filtered = Child.with_last_name('aaa')
+
+      expect(filtered).to include(aaa, bbbaaa, bbbaaaccc)
+      expect(filtered).not_to include(zzz)
+    end
+
+    it 'ignores case' do
+      aAa       = FactoryGirl.create(:default_child, :last_name => 'aAa')
+
+      filtered = Child.with_last_name('aaa')
+
+      expect(filtered).to include(aAa)
+    end
+  end
+
+  describe 'scope:with_ministry_tracker_id' do
+    it 'includes children whose ministry tracker id matches the value' do
+
+      a = FactoryGirl.create(:default_child, :ministry_tracker_id => '1111')
+      b = FactoryGirl.create(:default_child, :ministry_tracker_id => '2222')
+
+      filtered = Child.with_ministry_tracker_id('1111')
+
+      expect(filtered).to include(a)
+      expect(filtered).not_to include(b)
+    end
+  end
+
+
+  #
+  # Validation tests
+  #
+
   it "is invalid without a first name" do
     expect(FactoryGirl.build(:default_child, :first_name => "")).not_to be_valid
   end
@@ -14,6 +83,10 @@ RSpec.describe Child, type: :model do
     expect(FactoryGirl.build(:default_child, :last_name => "")).not_to be_valid
   end
 
+
+  #
+  # age tests
+  #
 
   describe '#age' do
     it 'returns nil if there is no date_of_birth' do
@@ -29,6 +102,10 @@ RSpec.describe Child, type: :model do
       expect(child.age).to eq(3)
     end
   end
+
+  #
+  # name tests
+  #
 
   describe '#name' do
     it 'returns last_name, first_name' do

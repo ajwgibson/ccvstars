@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   get 'charts/index'
   
+  get 'children/clear_filter'
   resources :children
 
   get 'registrations/index'

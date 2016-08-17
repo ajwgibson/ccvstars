@@ -36,8 +36,75 @@ RSpec.describe ChildrenController, type: :controller do
       expect(assigns(:children)).to eq([erin_gibson, riley_gibson, daniel_pavey])
     end
 
+    it "applies the 'with_first_name' filter" do
+      a = FactoryGirl.create(:default_child, :first_name => 'a')
+      b = FactoryGirl.create(:default_child, :first_name => 'b')
+
+      get :index, :with_first_name => 'a'
+
+      expect(assigns(:children)).to eq([a])
+    end
+
+    it "applies the 'with_last_name' filter" do
+      a = FactoryGirl.create(:default_child, :last_name => 'a')
+      b = FactoryGirl.create(:default_child, :last_name => 'b')
+
+      get :index, :with_last_name => 'a'
+
+      expect(assigns(:children)).to eq([a])
+    end
+
+    it "applies the 'with_ministry_tracker_id' filter" do
+      a = FactoryGirl.create(:default_child, :ministry_tracker_id => '1')
+      b = FactoryGirl.create(:default_child, :ministry_tracker_id => '2')
+
+      get :index, :with_ministry_tracker_id => '1'
+
+      expect(assigns(:children)).to eq([a])
+    end
+
+    it "applies multiple filters using 'AND'" do
+      aa = FactoryGirl.create(:default_child, :first_name => 'a', :last_name => 'a')
+      ab = FactoryGirl.create(:default_child, :first_name => 'a', :last_name => 'b')
+      ba = FactoryGirl.create(:default_child, :first_name => 'b', :last_name => 'a')
+
+      get :index, :with_first_name => 'a', :with_last_name => 'a'
+
+      expect(assigns(:children)).to eq([aa])
+    end
+
+    it "stores filters to the session" do
+      get :index, :with_first_name => 'a', :with_last_name => 'a'
+      expect(session[:filter_children]).to eq({'with_first_name' => 'a', 'with_last_name' => 'a'})
+    end
+
+    it "retrieves filters from the session if none have been supplied" do
+      
+      a = FactoryGirl.create(:default_child, :first_name => 'a')
+      b = FactoryGirl.create(:default_child, :first_name => 'b')
+
+      get :index, { }, { :filter_children => {'with_first_name' => 'a'} }
+      
+      expect(assigns(:children)).to eq([a])
+    end
+
   end
 
+
+  #
+  # GET #index
+  #
+  describe "GET #clear_filter" do
+    it "redirects to #index" do
+      get :clear_filter
+      expect(response).to redirect_to(:children)
+    end
+    it "clears the 'filter_children' session entry" do
+      session[:filter_children] = {'with_first_name' => 'a'}
+      get :clear_filter
+      expect(session.key?(:filter_children)).to be false
+    end
+  end
 
   #
   # GET #show

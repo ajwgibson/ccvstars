@@ -3,6 +3,10 @@ require 'spec_helper'
 
 RSpec.describe "children/index.html.erb", type: :view do
 
+  before(:each) do
+    assign(:filter, {})
+  end
+
   context 'when a child has a date of birth' do
 
     it 'displays the date using the format dd/mm/yyyy' do

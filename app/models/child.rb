@@ -1,7 +1,13 @@
 class Child < ActiveRecord::Base
 
+    include Filterable
+
     validates :first_name, :presence => true
     validates :last_name,  :presence => true
+
+    scope :with_first_name, -> (name) { where("lower(first_name) like lower(?)", "%#{name}%") }
+    scope :with_last_name, -> (name) { where("lower(last_name) like lower(?)", "%#{name}%") }
+    scope :with_ministry_tracker_id, -> (id) { where ministry_tracker_id: id }
 
     def age
       return nil unless date_of_birth

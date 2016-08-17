@@ -4,7 +4,27 @@ class ChildrenController < ApplicationController
 
   # GET /children
   def index
-    @children = Child.order('last_name', 'first_name')
+
+    @filter = 
+      params.slice(
+        :with_first_name, 
+        :with_last_name,
+        :with_ministry_tracker_id
+      )
+
+    @filter = session[:filter_children] if @filter.empty? && session.key?(:filter_children)
+
+    @children = Child.filter(@filter)
+    @children = @children.order('last_name', 'first_name')
+
+    session[:filter_children] = @filter
+  end
+
+
+  # GET /children/clear_filter
+  def clear_filter
+    session.delete(:filter_children)
+    redirect_to children_url
   end
 
 
