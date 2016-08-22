@@ -19,7 +19,7 @@
 
             <%= form_tag children_path, method: :get, class: "filter" do |f| %>
 
-            <div class="col-sm-6 col-sm-offset-6">
+            <div class="col-sm-12">
               <div class="panel panel-default">
 
                 <div class="panel-heading">
@@ -28,7 +28,7 @@
 
                 <div class="panel-body">
 
-                  <div class="col-sm-6">
+                  <div class="col-sm-3">
                     <div class="form-group">
                       <%= label_tag :with_first_name, 'First name', :class => 'control-label' %>
                       <%= text_field_tag :with_first_name, @filter["with_first_name"], :class => 'form-control' %>
@@ -40,19 +40,43 @@
                     </div>
                   </div>
 
-                  <div class="col-sm-6">
+                  <div class="col-sm-3">
                     <div class="form-group">
                       <%= label_tag :with_ministry_tracker_id, 'Ministry tracker ID', :class => 'control-label' %>
                       <%= text_field_tag :with_ministry_tracker_id, @filter["with_ministry_tracker_id"], :class => 'form-control' %>
                     </div>
                   </div>
 
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <%= label_tag :with_age, 'Age', :class => 'control-label' %>
+                      <%= number_field_tag :with_age, @filter["with_age"], min: 1, max: 99, :class => 'form-control' %>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <%= label_tag :with_update_required, 'Update required?', :class => 'control-label' %>
+                      <div class="checkbox checkbox-primary">
+                        <%= check_box_tag :with_update_required, 1, @filter["with_update_required"] %>
+                        <%= label_tag :with_update_required, 'Yes' %>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <%= label_tag :with_medical_information, 'Medical warning?', :class => 'control-label' %>
+                      <div class="checkbox checkbox-primary">
+                        <%= check_box_tag :with_medical_information, 1, @filter["with_medical_information"] %>
+                        <%= label_tag :with_medical_information, 'Yes' %>
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="col-sm-12">
                     <div class="form-group pull-right">
-                      <%= link_to children_clear_filter_path, :class => 'btn btn-danger' do %>
+                      <%= link_to children_clear_filter_path, :class => 'btn btn-default' do %>
                         <i class="fa fa-times"></i> Clear filter
                       <% end %>
-                      <%= button_tag(type: "submit", class: "btn btn-default") do %>
+                      <%= button_tag(type: "submit", class: "btn btn-primary") do %>
                         <i class="fa fa-filter"></i> Apply filter
                       <% end %>
                     </div>

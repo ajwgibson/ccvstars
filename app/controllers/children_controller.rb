@@ -9,7 +9,10 @@ class ChildrenController < ApplicationController
       params.slice(
         :with_first_name, 
         :with_last_name,
-        :with_ministry_tracker_id
+        :with_ministry_tracker_id,
+        :with_update_required,
+        :with_medical_information,
+        :with_age,
       )
 
     @filter = session[:filter_children] if @filter.empty? && session.key?(:filter_children)

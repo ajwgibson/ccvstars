@@ -8,6 +8,9 @@ class Child < ActiveRecord::Base
     scope :with_first_name, -> (name) { where("lower(first_name) like lower(?)", "%#{name}%") }
     scope :with_last_name, -> (name) { where("lower(last_name) like lower(?)", "%#{name}%") }
     scope :with_ministry_tracker_id, -> (id) { where ministry_tracker_id: id }
+    scope :with_update_required, ->(value) { where("update_required", value)}
+    scope :with_medical_information, ->(value) { where("medical_information <> ''")}
+    scope :with_age, ->(value) { where(date_of_birth: (Date.today - (value.to_i + 1).years + 1.day) .. (Date.today - value.to_i.years)) }
 
     def age
       return nil unless date_of_birth

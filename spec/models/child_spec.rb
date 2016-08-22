@@ -70,6 +70,47 @@ RSpec.describe Child, type: :model do
     end
   end
 
+  describe 'scope:with_update_required' do
+    it 'includes children with the update_required flag set to true' do
+
+      a = FactoryGirl.create(:default_child, :update_required => true)
+      b = FactoryGirl.create(:default_child, :update_required => false)
+
+      filtered = Child.with_update_required(1)
+
+      expect(filtered).to include(a)
+      expect(filtered).not_to include(b)
+    end
+  end
+
+  describe 'scope:with_medical_information' do
+    it 'includes children with medical details' do
+
+      a = FactoryGirl.create(:default_child, :medical_information => 'Something to note')
+      b = FactoryGirl.create(:default_child)
+
+      filtered = Child.with_medical_information(1)
+
+      expect(filtered).to include(a)
+      expect(filtered).not_to include(b)
+    end
+  end
+
+  describe 'scope:with_age' do
+    it 'includes children of the correct age' do
+
+      a = FactoryGirl.create(:default_child, :date_of_birth => Date.today - 1.year)
+      b = FactoryGirl.create(:default_child, :date_of_birth => Date.today - 1.year + 1.day)
+      c = FactoryGirl.create(:default_child, :date_of_birth => Date.today - 2.years)
+      d = FactoryGirl.create(:default_child, :date_of_birth => Date.today - 2.years + 1.day)
+
+      filtered = Child.with_age(1)
+
+      expect(filtered).to include(a, d)
+      expect(filtered).not_to include(b, c)
+    end
+  end
+
 
   #
   # Validation tests

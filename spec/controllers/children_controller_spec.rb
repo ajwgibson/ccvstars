@@ -63,6 +63,33 @@ RSpec.describe ChildrenController, type: :controller do
       expect(assigns(:children)).to eq([a])
     end
 
+    it "applies the 'with_update_required' filter" do
+      a = FactoryGirl.create(:default_child, :update_required => true)
+      b = FactoryGirl.create(:default_child, :update_required => false)
+
+      get :index, :with_update_required => '1'
+
+      expect(assigns(:children)).to eq([a])
+    end
+
+    it "applies the 'with_medical_information' filter" do
+      a = FactoryGirl.create(:default_child, :medical_information => 'Something')
+      b = FactoryGirl.create(:default_child)
+
+      get :index, :with_medical_information => '1'
+
+      expect(assigns(:children)).to eq([a])
+    end
+
+    it "applies the 'with_age' filter" do
+      a = FactoryGirl.create(:default_child, :date_of_birth => Date.today - 1.year)
+      b = FactoryGirl.create(:default_child, :date_of_birth => Date.today - 2.years)
+
+      get :index, :with_age => 1
+
+      expect(assigns(:children)).to eq([a])
+    end
+
     it "applies multiple filters using 'AND'" do
       aa = FactoryGirl.create(:default_child, :first_name => 'a', :last_name => 'a')
       ab = FactoryGirl.create(:default_child, :first_name => 'a', :last_name => 'b')
