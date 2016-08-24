@@ -43,6 +43,14 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  config.around(:each, stub_kaminari: true) do |ex|
+    config.mock_with :rspec do |mocks|
+      mocks.verify_partial_doubles = false
+      ex.run
+      mocks.verify_partial_doubles = true
+    end
+  end
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin

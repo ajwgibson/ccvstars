@@ -19,6 +19,7 @@ class ChildrenController < ApplicationController
 
     @children = Child.filter(@filter)
     @children = @children.order('last_name', 'first_name')
+    @children = @children.page params[:page]
 
     session[:filter_children] = @filter
   end

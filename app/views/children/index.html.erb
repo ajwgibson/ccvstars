@@ -28,42 +28,39 @@
 
                 <div class="panel-body">
 
-                  <div class="col-sm-3">
+                  <div class="col-sm-4">
                     <div class="form-group">
-                      <%= label_tag :with_first_name, 'First name', :class => 'control-label' %>
+                      <%= label_tag :with_first_name, 'First name contains', :class => 'control-label' %>
                       <%= text_field_tag :with_first_name, @filter["with_first_name"], :class => 'form-control' %>
                     </div>
 
                     <div class="form-group">
-                      <%= label_tag :with_last_name, 'Last name', :class => 'control-label' %>
+                      <%= label_tag :with_last_name, 'Last name contains', :class => 'control-label' %>
                       <%= text_field_tag :with_last_name, @filter["with_last_name"], :class => 'form-control' %>
                     </div>
                   </div>
 
-                  <div class="col-sm-3">
+                  <div class="col-sm-4">
                     <div class="form-group">
-                      <%= label_tag :with_ministry_tracker_id, 'Ministry tracker ID', :class => 'control-label' %>
+                      <%= label_tag :with_ministry_tracker_id, 'Ministry tracker ID equals', :class => 'control-label' %>
                       <%= text_field_tag :with_ministry_tracker_id, @filter["with_ministry_tracker_id"], :class => 'form-control' %>
                     </div>
-                  </div>
-
-                  <div class="col-sm-3">
                     <div class="form-group">
-                      <%= label_tag :with_age, 'Age', :class => 'control-label' %>
+                      <%= label_tag :with_age, 'Age equals', :class => 'control-label' %>
                       <%= number_field_tag :with_age, @filter["with_age"], min: 1, max: 99, :class => 'form-control' %>
                     </div>
                   </div>
 
-                  <div class="col-sm-3">
+                  <div class="col-sm-4">
                     <div class="form-group">
-                      <%= label_tag :with_update_required, 'Update required?', :class => 'control-label' %>
+                      <%= label_tag :with_update_required, 'Update is required', :class => 'control-label' %>
                       <div class="checkbox checkbox-primary">
                         <%= check_box_tag :with_update_required, 1, @filter["with_update_required"] %>
                         <%= label_tag :with_update_required, 'Yes' %>
                       </div>
                     </div>
                     <div class="form-group">
-                      <%= label_tag :with_medical_information, 'Medical warning?', :class => 'control-label' %>
+                      <%= label_tag :with_medical_information, 'Medical warning exists', :class => 'control-label' %>
                       <div class="checkbox checkbox-primary">
                         <%= check_box_tag :with_medical_information, 1, @filter["with_medical_information"] %>
                         <%= label_tag :with_medical_information, 'Yes' %>
@@ -93,8 +90,9 @@
           <%= link_to new_child_path, :class => 'btn btn-default btn-sm' do %>
             <i class="fa fa-plus"></i> Add a child
           <% end %>
-          
+
           <table class="table table-striped">
+            
             <thead>
               <tr>
                 <th>Name </th>
@@ -105,6 +103,7 @@
                 <th>Links </th>
               </tr>
             </thead>
+
             <tbody>
               <% @children.each do |child| %>
               <tr>
@@ -130,6 +129,17 @@
               </tr>
               <% end %>
             </tbody>
+
+            <tfoot>
+              <tr>
+                <td colspan="6">
+                  <div class="pull-right">
+                    <%= paginate @children %>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+
           </table>
 
         </div>
