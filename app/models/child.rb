@@ -1,5 +1,7 @@
 class Child < ActiveRecord::Base
 
+    acts_as_paranoid
+    
     include Filterable
 
     validates :first_name, :presence => true
@@ -38,5 +40,5 @@ class Child < ActiveRecord::Base
       result = result.reverse.chomp(',').reverse
       result.strip
     end
-    
+
 end

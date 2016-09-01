@@ -38,6 +38,8 @@
             <% end %>
           </div>
           <div>
+            <a class="btn btn-danger" data-toggle='modal' data-target='#delete'><i class="fa fa-times"></i> Delete this child</a>
+          </div>
             <%= link_to children_path, :class => 'btn btn-default' do %>
               <i class="fa fa-reply"></i> Back to children
             <% end %>
@@ -47,3 +49,31 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal inmodal" id="delete" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content animated flipInY">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <i class="fa fa-bomb modal-icon"></i>
+        <h4 class="modal-title">Warning</h4>
+        <small class="font-bold">You are about to delete a child!</small>
+      </div>
+      <div class="modal-body">
+        <p>
+          If you continue with this action you will delete this child's record. While this action 
+          <strong><em>can be reversed</em></strong>, you should probably still think carefully before continuing.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <%= form_for @child, method: :delete, :html => { :class => "child" } do |f| %>
+        <button type="button" class="btn btn-white" data-dismiss="modal">Cancel (don't delete)</button>
+        <button type="submit" class="btn btn-danger">Continue (delete)</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+

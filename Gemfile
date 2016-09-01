@@ -43,6 +43,9 @@ gem 'font-awesome-rails', '4.3.0.0'
 # Pagination
 gem 'kaminari'
 
+# Soft deletes
+gem 'acts_as_paranoid'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

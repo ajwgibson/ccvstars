@@ -36,6 +36,9 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    acts_as_paranoid (0.5.0)
+      activerecord (>= 4.0, < 5.1)
+      activesupport (>= 4.0, < 5.1)
     addressable (2.4.0)
     arel (6.0.3)
     autoprefixer-rails (6.3.6)
@@ -249,6 +252,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_paranoid
   bootstrap-sass (~> 3.3.6)
   byebug
   capybara

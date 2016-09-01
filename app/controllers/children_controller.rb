@@ -2,6 +2,7 @@ class ChildrenController < ApplicationController
 
   before_action :set_child, only: [:show, :edit, :update, :destroy]
 
+
   # GET /children
   def index
 
@@ -76,6 +77,13 @@ class ChildrenController < ApplicationController
       render :form
     end
 
+  end
+
+
+  # DELETE /roundups
+  def destroy
+    @child.destroy
+    redirect_to children_url, notice: 'Child was successfully deleted.'
   end
 
 

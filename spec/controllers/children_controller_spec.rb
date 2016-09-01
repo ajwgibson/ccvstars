@@ -298,4 +298,25 @@ RSpec.describe ChildrenController, type: :controller do
 
   end
 
+  #
+  # DELETE #destroy
+  #
+  describe "DELETE #destroy" do
+
+    let!(:child) { FactoryGirl.create(:default_child) }
+
+    it "soft deletes the child" do
+      expect {
+        delete :destroy, :id => child.id
+      }.to change(Child, :count).by(-1)
+      expect(Child.only_deleted.count).to eq(1)
+    end
+
+    it "redirects to #index" do
+      delete :destroy, :id => child.id
+      expect(response).to redirect_to(:children)
+    end
+
+  end
+
 end
