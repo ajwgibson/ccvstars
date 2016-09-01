@@ -19,6 +19,8 @@
 
             <%= form_tag children_path, method: :get, class: "filter" do |f| %>
 
+            <%= hidden_field_tag :order_by, @filter["order_by"] %>
+
             <div class="col-sm-12">
               <div class="panel panel-default">
 
@@ -95,11 +97,11 @@
             
             <thead>
               <tr>
-                <th>Name </th>
-                <th>Date of birth </th>
-                <th>Age </th>
+                <th><%= sortable 'last_name,first_name', @filter, 'Name' %></th>
+                <th><%= sortable 'date_of_birth', @filter, 'Date of birth' %></th>
+                <th>Age</th>
                 <th>Flags </th>
-                <th>Ministry Tracker ID </th>
+                <th><%= sortable 'ministry_tracker_id', @filter, 'Ministry Tracker ID' %></th>
                 <th>Links </th>
               </tr>
             </thead>

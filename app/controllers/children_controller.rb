@@ -13,15 +13,19 @@ class ChildrenController < ApplicationController
         :with_update_required,
         :with_medical_information,
         :with_age,
+        :order_by
       )
 
-    @filter = session[:filter_children] if @filter.empty? && session.key?(:filter_children)
+    @filter = session[:filter_children].symbolize_keys! if @filter.empty? && session.key?(:filter_children)
+
+    @filter = { :order_by => 'last_name,first_name' } if @filter.empty?
 
     @children = Child.filter(@filter)
-    @children = @children.order('last_name', 'first_name')
+
     @children = @children.page params[:page]
 
     session[:filter_children] = @filter
+
   end
 
 
