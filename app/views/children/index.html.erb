@@ -19,7 +19,7 @@
 
             <%= form_tag children_path, method: :get, class: "filter" do |f| %>
 
-            <%= hidden_field_tag :order_by, @filter["order_by"] %>
+            <%= hidden_field_tag :order_by, @filter[:order_by] %>
 
             <div class="col-sm-12">
               <div class="panel panel-default">
@@ -33,23 +33,23 @@
                   <div class="col-sm-4">
                     <div class="form-group">
                       <%= label_tag :with_first_name, 'First name contains', :class => 'control-label' %>
-                      <%= text_field_tag :with_first_name, @filter["with_first_name"], :class => 'form-control' %>
+                      <%= text_field_tag :with_first_name, @filter[:with_first_name], :class => 'form-control' %>
                     </div>
 
                     <div class="form-group">
                       <%= label_tag :with_last_name, 'Last name contains', :class => 'control-label' %>
-                      <%= text_field_tag :with_last_name, @filter["with_last_name"], :class => 'form-control' %>
+                      <%= text_field_tag :with_last_name, @filter[:with_last_name], :class => 'form-control' %>
                     </div>
                   </div>
 
                   <div class="col-sm-4">
                     <div class="form-group">
                       <%= label_tag :with_ministry_tracker_id, 'Ministry tracker ID equals', :class => 'control-label' %>
-                      <%= text_field_tag :with_ministry_tracker_id, @filter["with_ministry_tracker_id"], :class => 'form-control' %>
+                      <%= text_field_tag :with_ministry_tracker_id, @filter[:with_ministry_tracker_id], :class => 'form-control' %>
                     </div>
                     <div class="form-group">
                       <%= label_tag :with_age, 'Age equals', :class => 'control-label' %>
-                      <%= number_field_tag :with_age, @filter["with_age"], min: 1, max: 99, :class => 'form-control' %>
+                      <%= number_field_tag :with_age, @filter[:with_age], min: 1, max: 99, :class => 'form-control' %>
                     </div>
                   </div>
 
@@ -57,14 +57,14 @@
                     <div class="form-group">
                       <%= label_tag :with_update_required, 'Update is required', :class => 'control-label' %>
                       <div class="checkbox checkbox-primary">
-                        <%= check_box_tag :with_update_required, 1, @filter["with_update_required"] %>
+                        <%= check_box_tag :with_update_required, 1, @filter[:with_update_required] %>
                         <%= label_tag :with_update_required, 'Yes' %>
                       </div>
                     </div>
                     <div class="form-group">
                       <%= label_tag :with_medical_information, 'Medical warning exists', :class => 'control-label' %>
                       <div class="checkbox checkbox-primary">
-                        <%= check_box_tag :with_medical_information, 1, @filter["with_medical_information"] %>
+                        <%= check_box_tag :with_medical_information, 1, @filter[:with_medical_information] %>
                         <%= label_tag :with_medical_information, 'Yes' %>
                       </div>
                     </div>
