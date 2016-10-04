@@ -11,4 +11,6 @@ Rails.application.routes.draw do
 
   get 'registrations/index'
 
+  resources :child_uploads
+
 end

@@ -119,7 +119,7 @@ RSpec.describe ChildrenController, type: :controller do
 
 
   #
-  # GET #index
+  # GET #clear_filter
   #
   describe "GET #clear_filter" do
     it "redirects to #index" do
