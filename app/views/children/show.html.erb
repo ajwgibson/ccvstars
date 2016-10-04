@@ -22,6 +22,8 @@
             <dd><%= @child.medical_information %></dd>
             <dt>Ministry tracker Id</dt>
             <dd><%= @child.ministry_tracker_id %></dd>
+            <dt>Last updated</dt>
+            <dd><%= l(@child.updated_at, :format => :short) %></dd>
           </dl>
         </div>
       </div>
