@@ -9,8 +9,11 @@ Rails.application.routes.draw do
   get 'children/clear_filter'
   resources :children
 
-  get 'registrations/index'
-
   resources :child_uploads
+  
+  get  'sign_ins/index'
+  get  'sign_ins/clear_filter'
+  get  'sign_ins/import'
+  post 'sign_ins/import', to: 'sign_ins#do_import'
 
 end

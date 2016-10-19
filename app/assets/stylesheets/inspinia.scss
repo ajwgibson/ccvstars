@@ -1,7 +1,7 @@
 /*
  *
  *   INSPINIA - Responsive Admin Theme
- *   version 2.3
+ *   version 2.6.2
  *
 */
 
@@ -50,5 +50,16 @@
 // Your custom style to override base style
 @import "base/custom";
 
+// Clear layout on print mode
+@media print {
+  nav.navbar-static-side {
+    display: none;
+  }
 
+  body { overflow: visible !important; }
+
+  #page-wrapper {
+    margin: 0;
+  }
+}
 

@@ -144,33 +144,5 @@ RSpec.describe Child, type: :model do
     end
   end
 
-  #
-  # name tests
-  #
-
-  describe '#name' do
-    it 'returns last_name, first_name' do
-      child = FactoryGirl.build(:child, :first_name => 'John', :last_name => 'Watson')
-      expect(child.name).to eq('Watson, John')
-    end
-    context 'when there is no last_name' do
-      it 'returns the first_name' do
-        child = FactoryGirl.build(:child, :first_name => 'John')
-        expect(child.name).to eq('John')
-      end
-    end
-    context 'when there is no first_name' do
-      it 'returns the last_name' do
-        child = FactoryGirl.build(:child, :last_name => 'Watson')
-        expect(child.name).to eq('Watson')
-      end
-    end
-    context 'when there is no first_name or last_name' do
-      it 'returns an empty string' do
-        child = FactoryGirl.build(:child)
-        expect(child.name).to eq('')
-      end
-    end
-  end
 
 end

@@ -24,16 +24,17 @@
         <i class="fa fa-child"></i> <span class="nav-label">Children</span>
         <% end %>
       </li>
+      <li class="<%= 'active' if current_page?(controller: 'sign_ins') %>">
+        <%= link_to controller: "sign_ins" do %>
+        <i class="fa fa-check-square-o"></i> <span class="nav-label">Sign in records</span>
+        <% end %>
+      </li>
       <li class="<%= 'active' if current_page?(controller: 'child_uploads') %>">
         <%= link_to controller: "child_uploads" do %>
         <i class="fa fa-cloud-upload"></i> <span class="nav-label">Child uploads</span>
         <% end %>
       </li>
-      <li class="<%= 'active' if current_page?(controller: 'registrations') %>">
-        <%= link_to controller: "registrations" do %>
-        <i class="fa fa-check-square-o"></i> <span class="nav-label">Registrations</span>
-        <% end %>
-      </li>
+      
     </ul>
   </div>
 </nav>

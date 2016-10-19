@@ -97,11 +97,11 @@
             
             <thead>
               <tr>
-                <th><%= sortable 'last_name,first_name', @filter, 'Name' %></th>
-                <th><%= sortable 'date_of_birth', @filter, 'Date of birth' %></th>
+                <th><%= sortable 'last_name,first_name', @filter, children_path, 'Name' %></th>
+                <th><%= sortable 'date_of_birth', @filter, children_path, 'Date of birth' %></th>
                 <th>Age</th>
                 <th>Flags </th>
-                <th><%= sortable 'ministry_tracker_id', @filter, 'Ministry Tracker ID' %></th>
+                <th><%= sortable 'ministry_tracker_id', @filter, children_path, 'Ministry Tracker ID' %></th>
                 <th>Links </th>
               </tr>
             </thead>

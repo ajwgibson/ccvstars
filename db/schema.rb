@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902155609) do
+ActiveRecord::Schema.define(version: 20161008145940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,18 @@ ActiveRecord::Schema.define(version: 20160902155609) do
 
   add_index "children", ["deleted_at"], name: "index_children_on_deleted_at", using: :btree
 
+  create_table "sign_ins", force: :cascade do |t|
+    t.string   "first_name",                   null: false
+    t.string   "last_name",                    null: false
+    t.string   "room",                         null: false
+    t.datetime "sign_in_time",                 null: false
+    t.string   "label",                        null: false
+    t.boolean  "newcomer",     default: false
+    t.integer  "child_id"
+  end
+
+  add_index "sign_ins", ["child_id"], name: "index_sign_ins_on_child_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -61,4 +73,5 @@ ActiveRecord::Schema.define(version: 20160902155609) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
+  add_foreign_key "sign_ins", "children"
 end

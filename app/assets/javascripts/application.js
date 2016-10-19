@@ -17,11 +17,13 @@
 //= require pace/pace.min.js
 //= require slimscroll/jquery.slimscroll.min.js
 //= require toastr/toastr.min.js
+//= require datapicker/bootstrap-datepicker.js
+//= require jasny/jasny-bootstrap.min.js
 //= require_tree .
 
 $(function () {
 
-  $('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="tooltip"]').tooltip();
 
   toastr.options = {
     "closeButton": true,
@@ -42,6 +44,25 @@ $(function () {
 
   $('.toastr-message').each(function() {
     window["toastr"][$(this).attr('data-toastr-type')]($(this).text());
+  });
+
+  $('.decade .input-group.date').datepicker({
+      format: "dd/mm/yyyy",
+      startView: "decade",
+      todayBtn: "linked",
+      keyboardNavigation: false,
+      forceParse: false,
+      autoclose: true
+  });
+
+  $('.days .input-group.date').datepicker({
+      format: "dd/mm/yyyy",
+      startView: "days",
+      todayBtn: true,
+      todayHighlight: true,
+      keyboardNavigation: false,
+      forceParse: false,
+      autoclose: true
   });
 
 })

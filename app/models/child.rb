@@ -3,11 +3,11 @@ class Child < ActiveRecord::Base
     acts_as_paranoid
     
     include Filterable
+    include HasSortableName
+
 
     validates :first_name, :presence => true
     validates :last_name,  :presence => true
-
-
 
 
     scope :with_first_name, -> (name) { where("lower(first_name) like lower(?)", "%#{name}%") }
@@ -17,14 +17,6 @@ class Child < ActiveRecord::Base
     scope :with_medical_information, ->(value) { where("medical_information <> ''")}
     scope :with_age, ->(value) { where(date_of_birth: (Date.today - (value.to_i + 1).years + 1.day) .. (Date.today - value.to_i.years)) }
 
-    def self.order_by(value)
-      clause = (value.split(',').map { |x| x + " nulls first" }).join(",") unless value.include?('desc')
-      clause = (value.split(',').map { |x| x + " nulls last" }).join(",") if value.include?('desc')
-      order(clause)
-    end
-
-
-
 
     def age
       return nil unless date_of_birth
@@ -33,12 +25,5 @@ class Child < ActiveRecord::Base
       result
     end
 
-
-    def name
-      result = "#{last_name}, #{first_name}"
-      result = result.chomp(', ')
-      result = result.reverse.chomp(',').reverse
-      result.strip
-    end
 
 end

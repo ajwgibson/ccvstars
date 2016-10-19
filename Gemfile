@@ -71,8 +71,9 @@ group :development do
 end
 
 group :test do
-    gem "capybara"
-    gem "rake"
+  gem 'database_cleaner'
+  gem "capybara"
+  gem "rake"
 end
 
 group :production do
