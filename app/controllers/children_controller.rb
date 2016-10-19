@@ -80,12 +80,40 @@ class ChildrenController < ApplicationController
   end
 
 
-  # DELETE /roundups
+  # DELETE /children
   def destroy
     @child.destroy
     redirect_to children_url, notice: 'Child was successfully deleted.'
   end
 
+
+  # GET /children/import
+  def import
+    @file_upload = FileUpload.new
+  end
+
+
+  # POST /children/import
+  def do_import
+    
+    @file_upload = FileUpload.new(params[:file_upload])
+
+    if @file_upload.valid?
+
+      uploaded_io = params[:file_upload][:filename]
+
+      filename = @file_upload.upload_file(uploaded_io)
+
+      Child.import(filename)
+
+      redirect_to( { action: 'index' }, notice: 'Import completed successfully.')
+
+    else
+      render 'import'
+    end
+
+  end
+  
 
 private
 

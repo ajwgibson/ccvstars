@@ -6,11 +6,11 @@ Rails.application.routes.draw do
 
   get 'charts/index'
   
-  get 'children/clear_filter'
+  get  'children/clear_filter'
+  get  'children/import'
+  post 'children/import', to: 'children#do_import'
   resources :children
 
-  resources :child_uploads
-  
   get  'sign_ins/index'
   get  'sign_ins/clear_filter'
   get  'sign_ins/import'
