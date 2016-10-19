@@ -6,11 +6,11 @@
       <div class="ibox float-e-margins">
 
         <div class="ibox-title">
-          <h5>Sign in records</h5>
-          <div class="ibox-tools">
+          <div class="ibox-tools pull-right">
             <a class="btn btn-<%= @filter.except(:order_by).empty? ? "default" : "warning btn-outline" %> btn-sm"
                data-toggle="collapse" data-target="#filter"><i class="fa fa-filter"></i></a>
           </div>
+          <h2>Sign in records</h2>
         </div>
 
         <div class="ibox-content" style="display: block;">
