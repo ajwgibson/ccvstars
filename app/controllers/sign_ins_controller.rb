@@ -2,6 +2,10 @@ class SignInsController < ApplicationController
 
   before_action :set_sign_in, only: [:show, :edit, :update, :destroy]
 
+  before_action only: [:new, :create] do
+    @heading = "Add a sign in record"
+  end
+
 
   # GET /sign_ins
   def index
@@ -21,7 +25,7 @@ class SignInsController < ApplicationController
   # GET /sign_ins/clear_filter
   def clear_filter
     session.delete(:filter_sign_ins)
-    redirect_to sign_ins_index_url
+    redirect_to sign_ins_url
   end
 
 
@@ -33,7 +37,7 @@ class SignInsController < ApplicationController
 
   # POST /sign_ins/import
   def do_import
-    
+
     @file_upload = FileUpload.new(params[:file_upload])
 
     if @file_upload.valid?
@@ -51,7 +55,37 @@ class SignInsController < ApplicationController
     end
 
   end
-  
+
+
+  # GET /sign_ins/new
+  def new
+    @sign_in = SignIn.new
+    render :form
+  end
+
+  # POST /sign_ins
+  def create
+
+    @sign_in = SignIn.new(sign_in_params)
+
+    if !@sign_in.newcomer? && !@sign_in.child.nil?
+      @sign_in.first_name = @sign_in.child.first_name
+      @sign_in.last_name  = @sign_in.child.last_name
+    end
+
+    unless params[:the_date].empty? || params[:the_time].empty?
+      @sign_in.sign_in_time = DateTime.parse("#{params[:the_date]} #{params[:the_time]}")
+    end
+
+    if @sign_in.save
+      redirect_to( { action: 'index' }, notice: "Sign in record was created successfully.")
+    else
+      @the_date = params[:the_date]
+      @the_time = params[:the_time]
+      render :form
+    end
+
+  end
 
 
 private
@@ -62,9 +96,9 @@ private
 
 
     def get_filter
-      @filter = 
+      @filter =
         params.slice(
-          :with_first_name, 
+          :with_first_name,
           :with_last_name,
           :is_newcomer,
           :in_room,
@@ -95,6 +129,7 @@ private
           :sign_in_time,
           :newcomer,
           :label,
+          :child_id,
         )
     end
 

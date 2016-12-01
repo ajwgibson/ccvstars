@@ -1,0 +1,21 @@
+$(function () {
+
+    $('select.select-a-child').select2({
+        ajax: {
+            url: "<%= Rails.application.routes.url_helpers.json_children_path %>",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) { return { name: params.term }; },
+            processResults: function (data, params) {
+                var options = $.map(data, function (obj) {
+                    obj.text = obj.text || obj.full_name;
+                    return obj;
+                });
+                return { results: options };
+            },
+        },
+        placeholder: "Start typing to search by name...",
+        allowClear: true
+    });
+
+});

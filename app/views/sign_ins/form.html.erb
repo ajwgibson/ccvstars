@@ -1,0 +1,120 @@
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+
+        <div class="ibox-title">
+          <h2><%= @heading %></h2>
+        </div>
+
+        <div class="ibox-content">
+          <div class="row">
+            <div class="col-sm-6">
+
+              <p class="required-legend">
+                Indicates a required field
+              </p>
+
+              <%= render partial: "layouts/errors", object: @sign_in, as: 'form' %>
+
+              <%= form_for @sign_in, :html => { :class => "sign_in" } do |f| %>
+
+                <div class="form-group">
+                  <%= f.label :newcomer, "Newcomer?", class: "control-label" %>
+                  <div class="checkbox checkbox-primary">
+                    <%= f.check_box :newcomer,
+                          data: { toggle: "collapse", target: "#newcomer_name,#existing_child" } %>
+                    <%= f.label :newcomer, 'Yes' %>
+                  </div>
+                </div>
+
+                <div id="newcomer_name" class="collapse<%= @sign_in.newcomer ? ' in' : '' %>">
+                  <div class="form-group required <%= "has-error" if @sign_in.errors[:first_name].present? %>">
+                    <%= f.label :first_name, "First name", class: "control-label" %>
+                    <%= f.text_field :first_name, :class => 'form-control' %>
+                  </div>
+                  <div class="form-group required <%= "has-error" if @sign_in.errors[:last_name].present? %>">
+                    <%= f.label :last_name, "Last name", class: "control-label" %>
+                    <%= f.text_field :last_name, :class => 'form-control' %>
+                  </div>
+                </div>
+
+                <div id="existing_child" class="collapse<%= @sign_in.newcomer ? '' : ' in' %>">
+                  <div class="form-group required <%= "has-error" if @sign_in.errors[:child].present? %>">
+                    <%= f.label :child_id, "Child's name", class: "control-label" %>
+                    <div>
+                      <%= f.select :child_id,
+                            @sign_in.child.nil? ? {} : options_for_select([[@sign_in.child.full_name, @sign_in.child.id]], @sign_in.child.id),
+                            {},
+                            class: "form-control select-a-child" %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group required  <%= "has-error" if @sign_in.errors[:room].present? %>">
+                  <%= f.label :room, "Room", class: "control-label" %>
+                  <%= f.select :room, options_for_select(Room::ROOMS, @sign_in.room), { prompt: "Please select a room..." }, class: "form-control" %>
+                </div>
+
+                <div class="form-group required  <%= "has-error" if @sign_in.errors[:label].present? %>">
+                  <%= f.label :label, "Label", class: "control-label" %>
+                  <%= f.text_field :label, :class => 'form-control' %>
+                </div>
+
+                <div class="form-group date days required  <%= "has-error" if @sign_in.errors[:sign_in_time].present? %>">
+                  <%= f.label :the_date, 'Date', :class => 'control-label' %>
+                  <div class="input-group date">
+                    <span class="input-group-btn date">
+                      <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                    </span>
+                    <%= text_field_tag :the_date, @the_date,
+                                     :placeholder => 'dd/mm/yyyy',
+                                     :class => 'form-control date' %>
+                  </div>
+                </div>
+
+                <div class="form-group required  <%= "has-error" if @sign_in.errors[:sign_in_time].present? %>">
+                  <%= f.label :the_time, 'Time', :class => 'control-label' %>
+                  <div class="input-group clockpicker" data-autoclose="true">
+                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                    <%= text_field_tag :the_time, @the_time, { :placeholder => 'hh:mm', :class => 'form-control time' } %>
+                  </div>
+                </div>
+
+                <!--
+                <button class="btn btn-success now pull-right" type="button"
+                        style="margin-top: 25px;"
+                        data-date-target="the_date"
+                        data-time-target="the_time">Now!</button>
+                -->
+
+                <div class="form-group" style="margin-top: 20px;">
+
+                  <%= button_tag(type: "submit", class: "btn btn-primary") do %>
+                    <i class="fa fa-check"></i> Save
+                  <% end %>
+
+                  <% if @sign_in.id? %>
+                    <%= link_to sign_in_path, :class => 'btn btn-default' do %>
+                      <i class="fa fa-times"></i> Cancel
+                    <% end %>
+                  <% else %>
+                    <%= link_to sign_ins_path, :class => 'btn btn-default' do %>
+                      <i class="fa fa-times"></i> Cancel
+                    <% end %>
+                  <% end %>
+
+                </div>
+
+              <% end %>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

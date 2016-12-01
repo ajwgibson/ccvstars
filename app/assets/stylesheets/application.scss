@@ -18,6 +18,8 @@
  *= require toastr/toastr.min.css
  *= require awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css
  *= require jasny/jasny-bootstrap.min.css
+ *= require select2/select2.min.css
+ *= require clockpicker/clockpicker.css
  *= require inspinia
  */
 
@@ -27,4 +29,15 @@
       max-height: 35px;
     }
   }
+}
+
+.form-group.required .control-label:before,
+p.required-legend:before {
+  margin-right: 5px;
+  font-family: 'FontAwesome';
+  content: "\f069";
+}
+
+p.required-legend {
+  margin-bottom: 20px;
 }

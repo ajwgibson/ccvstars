@@ -13,16 +13,20 @@
           <div class="row">
             <div class="col-sm-4">
 
+              <p class="required-legend">
+                Indicates a required field
+              </p>
+
               <%= render partial: "layouts/errors", object: @child, as: 'form' %>
 
               <%= form_for @child, :html => { :class => "child" } do |f| %>
 
-                <div class="form-group <%= "has-error" if @child.errors[:first_name].present? %>">
+                <div class="form-group required <%= "has-error" if @child.errors[:first_name].present? %>">
                   <%= f.label :first_name, 'First name', :class => 'control-label' %>
                   <%= f.text_field :first_name, :class => 'form-control' %>
                 </div>
 
-                <div class="form-group <%= "has-error" if @child.errors[:last_name].present? %>">
+                <div class="form-group required <%= "has-error" if @child.errors[:last_name].present? %>">
                   <%= f.label :last_name, 'Last name', :class => 'control-label' %>
                   <%= f.text_field :last_name, :class => 'form-control' %>
                 </div>
@@ -31,9 +35,9 @@
                   <%= f.label :date_of_birth, 'Date of birth', :class => 'control-label' %>
                   <div class="input-group date">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <%= f.text_field :date_of_birth, 
-                                     :placeholder => 'dd/mm/yyyy', 
-                                     :value => (l(@child.date_of_birth, :format => :short) if @child.date_of_birth?), 
+                    <%= f.text_field :date_of_birth,
+                                     :placeholder => 'dd/mm/yyyy',
+                                     :value => (l(@child.date_of_birth, :format => :short) if @child.date_of_birth?),
                                      :class => 'form-control date' %>
                   </div>
                 </div>
@@ -51,17 +55,17 @@
                 <div class="form-group">
                   <%= f.label :update_required, 'Update required?', :class => 'control-label' %>
                   <div class="checkbox checkbox-warning">
-                    <%= f.check_box :update_required %> 
+                    <%= f.check_box :update_required %>
                     <%= f.label :update_required, 'Yes' %>
                   </div>
-                </div>           
+                </div>
 
                 <div class="form-group" style="margin-top: 20px;">
-                  
+
                   <%= button_tag(type: "submit", class: "btn btn-primary") do %>
                     <i class="fa fa-check"></i> Save
                   <% end %>
-                  
+
                   <% if @child.id? %>
                     <%= link_to child_path, :class => 'btn btn-default' do %>
                       <i class="fa fa-times"></i> Cancel
@@ -79,7 +83,7 @@
             </div>
           </div>
         </div>
-        
+
       </div>
     </div>
   </div>

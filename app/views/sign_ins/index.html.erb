@@ -17,7 +17,7 @@
 
           <div id="filter" class="filter collapse">
 
-            <%= form_tag sign_ins_index_path, method: :get, class: "filter" do |f| %>
+            <%= form_tag sign_ins_path, method: :get, class: "filter" do |f| %>
 
             <%= hidden_field_tag :order_by, @filter[:order_by] %>
 
@@ -45,8 +45,8 @@
                   <div class="col-sm-4">
                     <div class="form-group">
                       <%= label_tag :in_room, 'Room', :class => 'control-label' %>
-                      <%= select_tag :in_room, 
-                            options_for_select(@rooms, @filter[:in_room]), 
+                      <%= select_tag :in_room,
+                            options_for_select(@rooms, @filter[:in_room]),
                             include_blank: true,
                             :class => 'form-control' %>
                     </div>
@@ -63,10 +63,10 @@
                     <div class="form-group date days">
                       <%= label_tag :on_or_after, 'On or after', :class => 'control-label' %>
                       <div class="input-group date">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <%= text_field_tag :on_or_after, 
-                                          (l(@filter[:on_or_after], :format => :date) if @filter.has_key?(:on_or_after)), 
-                                          :placeholder => 'dd/mm/yyyy', 
+                        <span class="input-group-addon date"><i class="fa fa-calendar"></i></span>
+                        <%= text_field_tag :on_or_after,
+                                          (l(@filter[:on_or_after], :format => :date) if @filter.has_key?(:on_or_after)),
+                                          :placeholder => 'dd/mm/yyyy',
                                           :class => 'form-control date' %>
                       </div>
                     </div>
@@ -76,10 +76,10 @@
                     <div class="form-group date days">
                       <%= label_tag :on_or_before, 'On or before', :class => 'control-label' %>
                       <div class="input-group date">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <%= text_field_tag :on_or_before, 
-                                          (l(@filter[:on_or_before], :format => :date) if @filter.has_key?(:on_or_before)), 
-                                          :placeholder => 'dd/mm/yyyy', 
+                        <span class="input-group-addon date"><i class="fa fa-calendar"></i></span>
+                        <%= text_field_tag :on_or_before,
+                                          (l(@filter[:on_or_before], :format => :date) if @filter.has_key?(:on_or_before)),
+                                          :placeholder => 'dd/mm/yyyy',
                                           :class => 'form-control date' %>
                       </div>
                     </div>
@@ -104,17 +104,21 @@
 
           </div>
 
+          <%= link_to new_sign_in_path, :class => 'btn btn-default btn-sm' do %>
+            <i class="fa fa-plus"></i> Add a sign in record
+          <% end %>
+
           <%= link_to sign_ins_import_path, :class => 'btn btn-default btn-sm' do %>
             <i class="fa fa-upload"></i> Import records
           <% end %>
 
           <table class="table table-striped">
-            
+
             <thead>
               <tr>
-                <th><%= sortable 'last_name,first_name', @filter, sign_ins_index_path, 'Name' %></th>
-                <th><%= sortable 'room', @filter, sign_ins_index_path, 'Room' %></th>
-                <th><%= sortable 'sign_in_time', @filter, sign_ins_index_path, 'Date & time' %></th>
+                <th><%= sortable 'last_name,first_name', @filter, sign_ins_path, 'Name' %></th>
+                <th><%= sortable 'room', @filter, sign_ins_path, 'Room' %></th>
+                <th><%= sortable 'sign_in_time', @filter, sign_ins_path, 'Date & time' %></th>
                 <th>Label</th>
                 <th>Newcomer?</th>
               </tr>

@@ -166,6 +166,11 @@ RSpec.describe ChildrenController, type: :controller do
       expect(assigns(:child).id).to be_nil
     end
 
+    it "sets the heading to 'Add a child'" do
+      get :new
+      expect(assigns(:heading)).to eq('Add a child')
+    end
+
   end
 
 

@@ -11,12 +11,28 @@ RSpec.describe SignIn, type: :model do
   # Validation
   #
 
-  it "is invalid without a first name" do
-    expect(FactoryGirl.build(:default_sign_in, :first_name => "")).not_to be_valid
+  context "for a newcomer" do
+    it "is invalid without a first name" do
+      expect(FactoryGirl.build(:newcomer_sign_in, :first_name => "")).not_to be_valid
+    end
+
+    it "is invalid without a last name" do
+      expect(FactoryGirl.build(:newcomer_sign_in, :last_name => "")).not_to be_valid
+    end
   end
 
-  it "is invalid without a last name" do
-    expect(FactoryGirl.build(:default_sign_in, :last_name => "")).not_to be_valid
+  context "for an existing child" do
+    it "is invalid without a linked child" do
+      expect(FactoryGirl.build(:default_sign_in, :child => nil)).not_to be_valid
+    end
+    context "when the skip_child_validation flag is true" do
+      it "is valid without a linked child" do
+        expect(FactoryGirl.build(
+          :default_sign_in,
+          :child => nil,
+          :skip_child_validation => true)).to be_valid
+      end
+    end
   end
 
   it "is invalid without a room" do
@@ -32,12 +48,13 @@ RSpec.describe SignIn, type: :model do
   end
 
 
+
+
   #
   # Scopes
   #
 
   describe 'scope:with_first_name' do
-
 
     it 'includes records whose first name matches the value' do
 
@@ -144,6 +161,105 @@ RSpec.describe SignIn, type: :model do
       expect(filtered).not_to include(c)
     end
   end
-  
+
+  #
+  # Import tests
+  #
+
+  describe "#import" do
+
+    def clear_uploads
+      FileUtils.rm Dir.glob(Rails.root.join('public', 'uploads', '*'))
+    end
+
+    def file_fixture(file)
+      Rails.root.join('spec', 'fixtures', 'files', file)
+    end
+
+    before(:each) do
+      clear_uploads
+    end
+
+    after(:each) do
+      clear_uploads
+    end
+
+
+    context "when a newcomer record is encountered" do
+
+      before do
+        SignIn.import(file_fixture('sign_in_imports/newcomer.csv'))
+        @sign_in = SignIn.first
+      end
+
+      it "creates a new sign_in record" do
+        expect(SignIn.count).to eq(1)
+      end
+
+      it "maps the label from the Id column" do
+        expect(@sign_in.label).to eq('401')
+      end
+
+      it "maps the child's last_name from the 'Last' column" do
+        expect(@sign_in.last_name).to eq('Smith')
+      end
+
+      it "maps the child's first_name from the 'First' column" do
+        expect(@sign_in.first_name).to eq('John')
+      end
+
+      it "maps the sign in time" do
+        expect(@sign_in.sign_in_time).to eq(DateTime.parse('2016-11-20 11:32:22'))
+      end
+
+      it "maps the room" do
+        expect(@sign_in.room).to eq('Allstars')
+      end
+
+      it "maps the newcomer flag" do
+        expect(@sign_in.newcomer).to be(true)
+      end
+
+    end
+
+
+    context "when a record for an existing child is encountered" do
+
+      before do
+        SignIn.import(file_fixture('sign_in_imports/existing.csv'))
+        @sign_in = SignIn.first
+      end
+
+      it "maps the newcomer flag" do
+        expect(@sign_in.newcomer).to be(false)
+      end
+
+    end
+
+
+    context "when a duplicate record is found" do
+
+      before do
+        SignIn.import(file_fixture('sign_in_imports/duplicate.csv'))
+      end
+
+      it "ignores the duplicate" do
+        expect(SignIn.count).to eq(1)
+      end
+    end
+
+    context "when a record with no sign_in information is found" do
+
+      before do
+        SignIn.import(file_fixture('sign_in_imports/not_signed_in.csv'))
+      end
+
+      it "ignores the record" do
+        expect(SignIn.count).to eq(0)
+      end
+
+    end
+
+  end
 
 end

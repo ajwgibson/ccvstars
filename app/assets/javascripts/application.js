@@ -19,6 +19,9 @@
 //= require toastr/toastr.min.js
 //= require datapicker/bootstrap-datepicker.js
 //= require jasny/jasny-bootstrap.min.js
+//= require typeahead/bootstrap3-typeahead.min.js
+//= require select2/select2.full.min.js
+//= require clockpicker/clockpicker.js
 //= require_tree .
 
 $(function () {
@@ -64,5 +67,48 @@ $(function () {
       forceParse: false,
       autoclose: true
   });
+
+  $('.clockpicker').clockpicker();
+
+
+
+  $('button.now').click(function() {
+
+    var now = new Date();
+
+    var date_target_id = $(this).data('date-target');
+    var time_target_id = $(this).data('time-target');
+
+    $('#'+date_target_id).val(getDateString(now));
+    $('#'+time_target_id).val(getTimeString(now));
+
+  });
+
+
+  function getDateString(date) {
+
+    var day   = date.getDate() + "";
+    var month = (date.getMonth() + 1) + "";
+    var year  = date.getFullYear() + "";
+
+    if (day.length == 1)   day = "0" + day;
+    if (month.length == 1) month = "0" + month;
+
+    return day + "/" + month + "/" + year;
+  }
+
+
+  function getTimeString(date) {
+
+    var hours   = date.getHours() + "";
+    var minutes = date.getMinutes() + "";
+    var seconds = date.getSeconds() + "";
+
+    if (hours.length == 1)   hours = "0" + hours;
+    if (minutes.length == 1) minutes = "0" + minutes;
+    if (seconds.length == 1) seconds = "0" + seconds;
+
+    return hours + ":" + minutes + ":" + seconds;
+  }
 
 })

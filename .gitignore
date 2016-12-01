@@ -14,3 +14,6 @@
 
 # Ignore those annoying .DS_Store files on OSX
 .DS_Store
+
+# Byebug keeps history
+.byebug_history
