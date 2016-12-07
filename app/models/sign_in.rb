@@ -2,6 +2,8 @@ require 'csv'
 
 class SignIn < ActiveRecord::Base
 
+  acts_as_paranoid
+  
   include Filterable
   include Uploadable
   include HasSortableName

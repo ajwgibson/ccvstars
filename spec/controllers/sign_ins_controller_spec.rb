@@ -267,4 +267,25 @@ RSpec.describe SignInsController, type: :controller do
 
   end
 
+  #
+  # DELETE #destroy
+  #
+  describe "DELETE #destroy" do
+
+    let!(:sign_in_record) { FactoryGirl.create(:default_sign_in) }
+
+    it "soft deletes the record" do
+      expect {
+        delete :destroy, :id => sign_in_record.id
+      }.to change(SignIn, :count).by(-1)
+      expect(SignIn.only_deleted.count).to eq(1)
+    end
+
+    it "redirects to #index" do
+      delete :destroy, :id => sign_in_record.id
+      expect(response).to redirect_to(:sign_ins)
+    end
+
+  end
+
 end

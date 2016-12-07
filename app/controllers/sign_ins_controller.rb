@@ -87,6 +87,11 @@ class SignInsController < ApplicationController
 
   end
 
+  # DELETE /sign_ins
+  def destroy
+    @sign_in.destroy
+    redirect_to sign_ins_url, notice: 'Record was successfully deleted.'
+  end
 
 private
 

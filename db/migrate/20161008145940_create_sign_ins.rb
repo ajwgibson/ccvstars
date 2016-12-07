@@ -8,6 +8,10 @@ class CreateSignIns < ActiveRecord::Migration
       t.string     :label,        null: false
       t.boolean    :newcomer,     default: false
       t.references :child,        index: true, foreign_key: true
+
+      t.timestamps null: false
+      t.datetime   :deleted_at
     end
+    add_index :sign_ins, :deleted_at
   end
 end
