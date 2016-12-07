@@ -121,6 +121,7 @@
                 <th><%= sortable 'sign_in_time', @filter, sign_ins_path, 'Date & time' %></th>
                 <th>Label</th>
                 <th>Newcomer?</th>
+                <th>Links</th>
               </tr>
             </thead>
 
@@ -132,6 +133,11 @@
                 <td><%= l(sign_in.sign_in_time, :format => :short) %> </td>
                 <td><%= sign_in.label %> </td>
                 <td><%= check_icon sign_in.newcomer %> </td>
+                <td>
+                  <%= link_to sign_in_path(sign_in), :class => '' do %>
+                  <i class="fa fa-info-circle"></i> View details
+                  <% end %>
+                </td>
               </tr>
               <% end %>
             </tbody>

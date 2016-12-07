@@ -245,4 +245,26 @@ RSpec.describe SignInsController, type: :controller do
 
   end
 
+  #
+  # GET #show
+  #
+  describe "GET #show" do
+
+    let(:sign_in_record) { FactoryGirl.create(:default_sign_in) }
+
+    it "shows a record" do
+      get :show, {id: sign_in_record.id}
+      expect(response).to render_template :show
+      expect(response).to have_http_status(:success)
+      expect(assigns(:sign_in).id).to eq(sign_in_record.id)
+    end
+
+    it "raises an exception for a missing record" do
+      assert_raises(ActiveRecord::RecordNotFound) do
+        get :show, {id: 99}
+      end
+    end
+
+  end
+
 end
