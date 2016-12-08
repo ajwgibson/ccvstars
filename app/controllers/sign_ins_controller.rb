@@ -68,6 +68,8 @@ class SignInsController < ApplicationController
 
     @sign_in = SignIn.new(sign_in_params)
 
+    @sign_in.child = nil if @sign_in.newcomer?
+
     if !@sign_in.newcomer? && !@sign_in.child.nil?
       @sign_in.first_name = @sign_in.child.first_name
       @sign_in.last_name  = @sign_in.child.last_name
@@ -93,10 +95,45 @@ class SignInsController < ApplicationController
     redirect_to sign_ins_url, notice: 'Record was successfully deleted.'
   end
 
+  # GET /sign_ins/edit
+  def edit
+    @heading = "Edit a record"
+    render :form
+  end
+
+  # PATCH/PUT /sign_ins
+  def update
+
+    @sign_in.attributes = sign_in_params
+    @sign_in.sign_in_time = nil
+    @sign_in.child = nil if @sign_in.newcomer?
+
+    if !@sign_in.newcomer? && !@sign_in.child.nil?
+      @sign_in.first_name = @sign_in.child.first_name
+      @sign_in.last_name  = @sign_in.child.last_name
+    end
+
+    unless params[:the_date].empty? || params[:the_time].empty?
+      @sign_in.sign_in_time = DateTime.parse("#{params[:the_date]} #{params[:the_time]}")
+    end
+
+    if @sign_in.save
+      redirect_to @sign_in, notice: 'Sign in record was updated successfully.'
+    else
+      @heading = "Edit a record"
+      @the_date = params[:the_date]
+      @the_time = params[:the_time]
+      render :form
+    end
+
+  end
+
 private
 
     def set_sign_in
       @sign_in = SignIn.find(params[:id])
+      @the_date = @sign_in.sign_in_time.strftime("%d/%m/%Y")
+      @the_time = @sign_in.sign_in_time.strftime("%H:%M:%S")
     end
 
 

@@ -10,7 +10,7 @@ RSpec.describe JsonController, type: :controller do
   describe "GET #children" do
 
     it "sets the content type to json" do
-      get :children, :name => ''
+      get :children
       expect(response.headers["Content-Type"]).to match /application\/json/
     end
 
@@ -21,7 +21,7 @@ RSpec.describe JsonController, type: :controller do
         { id: child_1.id, full_name: 'a a' },
         { id: child_2.id, full_name: 'b b' },
       ].to_json
-      get :children, :name => ''
+      get :children
       expect(response.body).to eq(expected)
     end
 
@@ -36,7 +36,7 @@ RSpec.describe JsonController, type: :controller do
         { id: child_3.id, full_name: 'b a' },
         { id: child_1.id, full_name: 'b b' },
       ].to_json
-      get :children, :name => ''
+      get :children
       expect(response.body).to eq(expected)
     end
 

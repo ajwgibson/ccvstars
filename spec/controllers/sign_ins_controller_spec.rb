@@ -288,4 +288,126 @@ RSpec.describe SignInsController, type: :controller do
 
   end
 
+  #
+  # GET #edit
+  #
+  describe "GET #edit" do
+
+    let(:sign_in_record) {
+      FactoryGirl.create(
+        :default_sign_in,
+        sign_in_time: DateTime.new(2016, 11, 21, 14, 34, 59))
+    }
+
+    it "shows a record" do
+      get :edit, {id: sign_in_record.id}
+      expect(response).to render_template :form
+      expect(response).to have_http_status(:success)
+      expect(assigns(:sign_in).id).to eq(sign_in_record.id)
+      expect(assigns(:the_date)).to eq('21/11/2016')
+      expect(assigns(:the_time)).to eq('14:34:59')
+    end
+
+    it "raises an exception for a missing record" do
+      assert_raises(ActiveRecord::RecordNotFound) do
+        get :edit, {id: 99}
+      end
+    end
+
+  end
+
+  #
+  # POST #update
+  #
+  describe "POST #update" do
+
+    context "with valid data" do
+
+      let(:sign_in_record) {
+        FactoryGirl.create(
+          :default_sign_in,
+          sign_in_time: DateTime.new(2016, 11, 21, 14, 34, 59))
+      }
+
+      def post_sign_in
+        attrs = FactoryGirl.attributes_for(:newcomer_sign_in)
+        sign_in_time = attrs.delete(:sign_in_time)
+        put :update, id: sign_in_record.id, sign_in: attrs, the_date: sign_in_time.to_date, the_time: sign_in_time.to_time
+        sign_in_record.reload
+      end
+
+      it "updates the record" do
+        post_sign_in
+        expect(sign_in_record.newcomer).to be true
+      end
+
+      it "redirects to the show action" do
+        post_sign_in
+        expect(response).to redirect_to(sign_in_path())
+      end
+
+      it "set a flash message" do
+        post_sign_in
+        expect(flash[:notice]).to eq('Sign in record was updated successfully.')
+      end
+
+    end
+
+    context "for an existing child" do
+
+      let(:sign_in_record) {
+        FactoryGirl.create(
+          :default_sign_in,
+          sign_in_time: DateTime.new(2016, 11, 21, 14, 34, 59),
+          first_name: 'Joe',
+          last_name: 'Bloggs')
+      }
+
+      def post_sign_in
+        attrs = FactoryGirl.attributes_for(:default_sign_in,
+                                           :first_name => 'a', :last_name => 'b')
+        sign_in_time = attrs.delete(:sign_in_time)
+        put :update, id: sign_in_record.id, sign_in: attrs, the_date: sign_in_time.to_date, the_time: sign_in_time.to_time
+        sign_in_record.reload
+      end
+
+      it "updates the first and last names from the child record" do
+        post_sign_in
+        expect(sign_in_record.first_name).to eq('First')
+        expect(sign_in_record.last_name).to eq('Last')
+      end
+
+    end
+
+    context "with invalid data" do
+
+      let(:sign_in_record) {
+        FactoryGirl.create(
+          :default_sign_in,
+          sign_in_time: DateTime.new(2016, 11, 21, 14, 34, 59))
+      }
+
+      def post_sign_in
+        attrs = FactoryGirl.attributes_for(:sign_in, label: 'A new label', newcomer: true)
+        put :update, id: sign_in_record.id, sign_in: attrs, the_date: "2016-11-11", the_time: "17:45:59"
+        sign_in_record.reload
+      end
+
+      it "does not update the record" do
+        post_sign_in
+        expect(sign_in_record.label).not_to eq('A new label')
+      end
+
+      it "re-renders the form with the posted data" do
+        post_sign_in
+        expect(response).to render_template(:form)
+        expect(assigns(:sign_in).label).to eq('A new label')
+        expect(assigns(:the_date)).to eq('2016-11-11')
+        expect(assigns(:the_time)).to eq('17:45:59')
+      end
+
+    end
+
+  end
+
 end

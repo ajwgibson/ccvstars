@@ -1,6 +1,6 @@
 $(function () {
 
-    $('select.select-a-child').select2({
+    var select2_params = {
         ajax: {
             url: "<%= Rails.application.routes.url_helpers.json_children_path %>",
             dataType: 'json',
@@ -16,6 +16,12 @@ $(function () {
         },
         placeholder: "Start typing to search by name...",
         allowClear: true
+    };
+
+    $('select.select-a-child').select2(select2_params);
+
+    $('#existing_child').on('shown.bs.collapse', function () {
+        $(this).find('select.select-a-child').select2(select2_params);
     });
 
 });
