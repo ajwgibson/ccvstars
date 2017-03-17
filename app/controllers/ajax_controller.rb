@@ -1,6 +1,6 @@
-class JsonController < ApplicationController
+class AjaxController < ApplicationController
 
-  # GET /json/children
+  # GET /ajax/children
   def children
 
     names = [] unless params.has_key?(:name)

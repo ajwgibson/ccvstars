@@ -2,7 +2,7 @@ $(function () {
 
     var select2_params = {
         ajax: {
-            url: "<%= Rails.application.routes.url_helpers.json_children_path %>",
+            url: "<%= Rails.application.routes.url_helpers.ajax_children_path %>",
             dataType: 'json',
             delay: 250,
             data: function (params) { return { name: params.term }; },

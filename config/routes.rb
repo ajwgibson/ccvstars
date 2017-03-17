@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post 'sign_ins/import', to: 'sign_ins#do_import'
   resources :sign_ins
 
-  get 'json/children'
+  get 'ajax/children'
 
   scope '/api' do
     post '/auth_user', to: 'api#authenticate_user'

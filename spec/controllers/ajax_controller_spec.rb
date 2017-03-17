@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe JsonController, type: :controller do
+RSpec.describe AjaxController, type: :controller do
 
   login_user
 
