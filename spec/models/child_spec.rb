@@ -146,6 +146,22 @@ RSpec.describe Child, type: :model do
 
 
   #
+  # has_history? tests
+  #
+
+  describe '#has_history?' do
+    it 'returns true if the child has at least one sign_in record' do
+      sign_in = FactoryGirl.create(:default_sign_in)
+      expect(sign_in.child.has_history?).to be true
+    end
+    it 'returns false if the child no sign_in records' do
+      child = FactoryGirl.build(:default_child)
+      expect(child.has_history?).to be false
+    end
+  end
+
+
+  #
   # Import tests
   #
 
@@ -170,7 +186,7 @@ RSpec.describe Child, type: :model do
 
     context "when a new ministry tracker id is found" do
 
-      before do 
+      before do
         Child.import(file_fixture('child_imports/one_new_child.xlsx'))
         @child = Child.first
       end
@@ -200,7 +216,7 @@ RSpec.describe Child, type: :model do
 
     context "when a child has no address" do
 
-      before do 
+      before do
         Child.import(file_fixture('child_imports/update_required.xlsx'))
         @child = Child.first
       end
@@ -214,7 +230,7 @@ RSpec.describe Child, type: :model do
 
     context "when a child has an invalid date of birth" do
 
-      before do 
+      before do
         Child.import(file_fixture('child_imports/invalid_date_of_birth.xlsx'))
         @child = Child.first
       end
@@ -228,7 +244,7 @@ RSpec.describe Child, type: :model do
 
     context "when an existing ministry tracker id is found" do
 
-      before do 
+      before do
         FactoryGirl.create(:default_child, :ministry_tracker_id => '1001')
         Child.import(file_fixture('child_imports/one_updated_child.xlsx'))
         @child = Child.find_by ministry_tracker_id: '1001'

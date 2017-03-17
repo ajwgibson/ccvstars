@@ -34,6 +34,11 @@ class Child < ActiveRecord::Base
   end
 
 
+  def has_history?
+    sign_ins.count > 0
+  end
+
+
   def self.import(file)
 
     xlsx = Roo::Excelx.new(file)

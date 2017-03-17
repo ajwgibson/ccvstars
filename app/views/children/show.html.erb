@@ -1,5 +1,6 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
+
   <div class="row">
     <div class="col-lg-9">
       <div class="ibox float-e-margins">
@@ -8,17 +9,17 @@
         </div>
         <div class="ibox-content">
           <dl class="dl-horizontal">
-            <dt>First name</dt>             
+            <dt>First name</dt>
             <dd><%= @child.first_name %></dd>
-            <dt>Last name</dt>         
+            <dt>Last name</dt>
             <dd><%= @child.last_name %></dd>
-            <dt>Date of birth</dt>                     
+            <dt>Date of birth</dt>
             <dd><%= date_of_birth(@child) %> </dd>
-            <dt>Age</dt>                 
+            <dt>Age</dt>
             <dd><span class="age"><%= @child.age %> </span></dd>
-            <dt>Update required?</dt>                   
+            <dt>Update required?</dt>
             <dd><%= t(@child.update_required.class) %></dd>
-            <dt>Medical information</dt> 
+            <dt>Medical information</dt>
             <dd><%= @child.medical_information %></dd>
             <dt>Ministry tracker Id</dt>
             <dd><%= @child.ministry_tracker_id %></dd>
@@ -45,11 +46,85 @@
             <%= link_to children_path, :class => 'btn btn-default' do %>
               <i class="fa fa-reply"></i> Back to children
             <% end %>
-          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h4>Most recent attendances</h4>
+        </div>
+        <div class="ibox-content">
+          <% if @child.has_history? then %>
+          <div id="vertical-timeline" class="vertical-container dark-timeline center-orientation">
+            <% @child.sign_ins.order(sign_in_time: :desc).take(3).each do |sign_in| %>
+              <div class="vertical-timeline-block">
+                <div class="vertical-timeline-icon navy-bg">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <div class="vertical-timeline-content">
+                  <span class="vertical-date">
+                    <%= sign_in.sign_in_time.strftime("%d %b %Y") %> <br />
+                    <small><%= sign_in.sign_in_time.strftime("%H:%M") %></small>
+                  </span>
+                  <address>
+                    <strong><%= sign_in.room %></strong><br>
+                    <%= sign_in.label %>
+                    <% if sign_in.newcomer? then %>
+                    <small><span class="label label-warning">NEW</span></small>
+                    <% end %>
+                  </address>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <% else %>
+          <p><em>This child has no attendance history.</em></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h4>Full attendance history</h4>
+        </div>
+        <div class="ibox-content">
+          <% if @child.has_history? then %>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Date &amp; time</th>
+                <th>Room</th>
+                <th>Label</th>
+                <th>New?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @child.sign_ins.order(sign_in_time: :desc).each do |sign_in| %>
+              <tr>
+                <td><%= l(sign_in.sign_in_time, :format => :short) %> </td>
+                <td><%= sign_in.room %> </td>
+                <td><%= sign_in.label %> </td>
+                <td><%= check_icon sign_in.newcomer %> </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% else %>
+          <p><em>This child has no attendance history.</em></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 
@@ -64,7 +139,7 @@
       </div>
       <div class="modal-body">
         <p>
-          If you continue with this action you will delete this child's record. While this action 
+          If you continue with this action you will delete this child's record. While this action
           <strong><em>can be reversed</em></strong>, you should probably still think carefully before continuing.
         </p>
       </div>
@@ -77,5 +152,3 @@
     </div>
   </div>
 </div>
-
-
