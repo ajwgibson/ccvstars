@@ -9,7 +9,6 @@ class ApiController < ApplicationController
   attr_reader :current_user
 
 
-  # GET /api/children
   def children
 
     @children = Child.all
@@ -25,7 +24,6 @@ class ApiController < ApplicationController
   end
 
 
-  # POST /api/sign_ins/create
   def create_sign_in
 
     @sign_in = SignIn.new(sign_in_params)
@@ -48,7 +46,17 @@ class ApiController < ApplicationController
   end
 
 
-  # POST /api/authenticate_user
+  def sign_ins
+    records = SignIn.for_today.order(:sign_in_time)
+    respond_to do |format|
+      format.any {
+        render json: records,
+        content_type: 'application/json'
+      }
+    end
+  end
+
+
   def authenticate_user
     user = User.find_for_database_authentication(email: params[:email])
     if user && user.valid_password?(params[:password])

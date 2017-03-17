@@ -162,6 +162,19 @@ RSpec.describe SignIn, type: :model do
     end
   end
 
+  describe 'scope:for_today' do
+    it 'includes records that fall on the current date' do
+      a  = FactoryGirl.create(:default_sign_in, :sign_in_time => 1.days.ago)
+      b  = FactoryGirl.create(:default_sign_in, :sign_in_time => 0.days.ago)
+      c  = FactoryGirl.create(:default_sign_in, :sign_in_time => 1.days.from_now)
+
+      filtered = SignIn.for_today()
+
+      expect(filtered).to include(b)
+      expect(filtered).not_to include(a, c)
+    end
+  end
+
   #
   # Import tests
   #

@@ -3,7 +3,7 @@ require 'csv'
 class SignIn < ActiveRecord::Base
 
   acts_as_paranoid
-  
+
   include Filterable
   include Uploadable
   include HasSortableName
@@ -23,8 +23,9 @@ class SignIn < ActiveRecord::Base
   scope :with_last_name,  ->(value) { where("lower(last_name)  like lower(?)", "%#{value}%") }
   scope :is_newcomer,     ->(value) { where newcomer: value }
   scope :in_room,         ->(value) { where room: value }
-  scope :on_or_after,     ->(value) { where("sign_in_time >= ?", value.beginning_of_day) }
-  scope :on_or_before,    ->(value) { where("sign_in_time < ?",  value.end_of_day) }
+  scope :on_or_after,     ->(value) { where("sign_in_time >= ?",  value.beginning_of_day) }
+  scope :on_or_before,    ->(value) { where("sign_in_time < ?",   value.end_of_day) }
+  scope :for_today,       ->()      { where("date(sign_in_time) = ?", Date.today) }
 
 
   def skip_child_validation?

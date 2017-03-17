@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'pp'
 
 RSpec.describe ApiController, type: :controller do
 
@@ -208,6 +207,54 @@ RSpec.describe ApiController, type: :controller do
     context "with an invalid token" do
       it "returns an error" do
         post :create_sign_in, FactoryGirl.attributes_for(:newcomer_sign_in)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+  end
+
+  #
+  # GET #sign_ins
+  #
+  describe "GET #sign_ins" do
+
+    context "with a valid token" do
+
+      before(:each) do
+        setup_auth_token
+      end
+
+      it "returns a JSON list of sign_ins" do
+        FactoryGirl.create(:default_sign_in, label: 'A')
+        get :sign_ins
+        expect(response.header['Content-Type']).to include("application/json")
+        expect(parsed_response.size).to eq(1)
+        expect(parsed_response[0]["label"]).to eq('A')
+      end
+
+      it "only returns sign_ins for today" do
+        FactoryGirl.create(:default_sign_in, label: "A", sign_in_time: 1.days.ago)
+        FactoryGirl.create(:default_sign_in, label: "B", sign_in_time: DateTime.now)
+        FactoryGirl.create(:default_sign_in, label: "C", sign_in_time: 1.days.from_now)
+        get :sign_ins
+        expect(parsed_response.size).to eq(1)
+        expect(parsed_response[0]["label"]).to eq('B')
+      end
+
+      it "orders the sign_ins by time oldest first" do
+        FactoryGirl.create(:default_sign_in, label: "A", sign_in_time: 5.minutes.from_now)
+        FactoryGirl.create(:default_sign_in, label: "B", sign_in_time: 5.minutes.ago)
+        FactoryGirl.create(:default_sign_in, label: "C", sign_in_time: DateTime.now)
+        get :sign_ins
+        result = parsed_response.map { |s| s["label"] }
+        expect(result).to eq(['B', 'C', 'A'])
+      end
+
+    end
+
+    context "with an invalid token" do
+      it "returns an error" do
+        get :sign_ins
         expect(response).to have_http_status(:unauthorized)
       end
     end

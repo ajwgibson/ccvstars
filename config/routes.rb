@@ -25,7 +25,8 @@ Rails.application.routes.draw do
         get '/', to: 'api#children'
       end
       scope '/sign_ins' do
-        post '/create', to: 'api#create_sign_in'
+        get  '/', to: 'api#sign_ins'
+        post '/', to: 'api#create_sign_in'
       end
     end
   end
