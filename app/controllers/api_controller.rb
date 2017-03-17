@@ -8,6 +8,7 @@ class ApiController < ApplicationController
 
   attr_reader :current_user
 
+
   # GET /api/children
   def children
 
@@ -23,10 +24,12 @@ class ApiController < ApplicationController
 
   end
 
-  # GET /api/sign_ins/create
+
+  # POST /api/sign_ins/create
   def create_sign_in
+
     @sign_in = SignIn.new(sign_in_params)
-    
+
     if !@sign_in.child.nil?
       @sign_in.first_name = @sign_in.child.first_name
       @sign_in.last_name  = @sign_in.child.last_name
@@ -45,9 +48,10 @@ class ApiController < ApplicationController
   end
 
 
+  # POST /api/authenticate_user
   def authenticate_user
     user = User.find_for_database_authentication(email: params[:email])
-    if user.valid_password?(params[:password])
+    if user && user.valid_password?(params[:password])
       render json: payload(user)
     else
       render json: {errors: ['Invalid Username/Password']}, status: :unauthorized

@@ -13,7 +13,7 @@ FactoryGirl.define do
     first_name          "First"
     last_name           "Last"
     room                "Allstars"
-    sign_in_time        DateTime.now
+    sign_in_time        DateTime.now.change(:sec => 0)
     label               "A1"
 
     association :child, factory: :default_child
