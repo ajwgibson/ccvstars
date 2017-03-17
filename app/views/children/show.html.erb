@@ -68,14 +68,11 @@
                 <div class="vertical-timeline-content">
                   <span class="vertical-date">
                     <%= sign_in.sign_in_time.strftime("%d %b %Y") %> <br />
-                    <small><%= sign_in.sign_in_time.strftime("%H:%M") %></small>
+                    <small><%= sign_in.sign_in_time.strftime("%H:%M") %> <%= late_icon sign_in.late? %> </small>
                   </span>
                   <address>
                     <strong><%= sign_in.room %></strong><br>
                     <%= sign_in.label %>
-                    <% if sign_in.newcomer? then %>
-                    <small><span class="label label-warning">NEW</span></small>
-                    <% end %>
                   </address>
                 </div>
               </div>
@@ -103,16 +100,14 @@
                 <th>Date &amp; time</th>
                 <th>Room</th>
                 <th>Label</th>
-                <th>New?</th>
               </tr>
             </thead>
             <tbody>
               <% @child.sign_ins.order(sign_in_time: :desc).each do |sign_in| %>
               <tr>
-                <td><%= l(sign_in.sign_in_time, :format => :short) %> </td>
+                <td><%= l(sign_in.sign_in_time, :format => :short) %> <%= late_icon sign_in.late? %></td>
                 <td><%= sign_in.room %> </td>
                 <td><%= sign_in.label %> </td>
-                <td><%= check_icon sign_in.newcomer %> </td>
               </tr>
               <% end %>
             </tbody>

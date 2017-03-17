@@ -130,7 +130,7 @@
               <tr>
                 <td><%= sign_in.name %> </td>
                 <td><%= sign_in.room %> </td>
-                <td><%= l(sign_in.sign_in_time, :format => :short) %> </td>
+                <td><%= l(sign_in.sign_in_time, :format => :short) %> <%= late_icon sign_in.late? %> </td>
                 <td><%= sign_in.label %> </td>
                 <td><%= check_icon sign_in.newcomer %> </td>
                 <td>

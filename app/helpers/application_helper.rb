@@ -21,7 +21,7 @@ module ApplicationHelper
     is_descending = current_order_by.include?("desc")
 
     filter = filter.except(:order_by)
-    
+
     filter[:order_by] = column
     filter[:order_by] = (column.split(',').map { |x| x + " desc" }).join(",") if is_current && !is_descending
 
@@ -34,13 +34,18 @@ module ApplicationHelper
     content_tag :a, :href => href  do
       concat("#{title} ")
       concat(content_tag :i, " ", :class => css_class)
-    end 
+    end
 
   end
 
 
   def check_icon(value)
       content_tag(:span, " ", class: ["fa", "fa-check-square-o"]) if value
+  end
+
+
+  def late_icon(value)
+      content_tag(:span, " ", class: ["text-warning", "fa", "fa-bell"]) if value
   end
 
 
@@ -72,7 +77,7 @@ module ApplicationHelper
 
     flash_messages.join("\n").html_safe
   end
-  
+
 
 
 

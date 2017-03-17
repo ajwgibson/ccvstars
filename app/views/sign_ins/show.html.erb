@@ -13,7 +13,7 @@
             <dt>Room</dt>
             <dd><%= @sign_in.room %></dd>
             <dt>Date and time</dt>
-            <dd><%= l(@sign_in.sign_in_time, :format => :short) %></dd>
+            <dd><%= l(@sign_in.sign_in_time, :format => :short) %> <%= late_icon @sign_in.late? %></dd>
             <dt>Label</dt>
             <dd><%= @sign_in.label %></dd>
             <dt>Newcomer?</dt>

@@ -33,6 +33,15 @@ class SignIn < ActiveRecord::Base
   end
 
 
+  def late?
+    time = sign_in_time.strftime("%H:%M:%S")
+    return false unless time > "09:30"
+    return true  if     time < "11:00"
+    return false unless time > "11:30"
+    true
+  end
+
+
   def self.import(file)
 
     CSV::HeaderConverters[:sign_in] = lambda { |s|

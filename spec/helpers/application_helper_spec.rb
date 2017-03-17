@@ -79,4 +79,16 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+
+  describe "late_icon" do
+    it "creates an icon when the value is true" do
+      output = helper.late_icon(true)
+      expect(output).to include('<span class="text-warning fa fa-bell"> </span>')
+    end
+    it "outputs nil when the value is false" do
+      output = helper.late_icon(false)
+      expect(output).to be_nil
+    end
+  end
+
 end

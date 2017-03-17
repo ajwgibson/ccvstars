@@ -175,6 +175,38 @@ RSpec.describe SignIn, type: :model do
     end
   end
 
+
+  #
+  # late? tests
+  #
+
+  describe "#late?" do
+    it 'returns false if the sign_in was before 09:30' do
+      sign_in = FactoryGirl.create(
+        :newcomer_sign_in,
+        sign_in_time: DateTime.new(2017, 1, 2, 9, 29, 0))
+      expect(sign_in.late?).to be false
+    end
+    it 'returns true if the sign_in was after 09:30 and before 11:00' do
+      sign_in = FactoryGirl.create(
+        :newcomer_sign_in,
+        sign_in_time: DateTime.new(2017, 1, 2, 9, 30, 1))
+      expect(sign_in.late?).to be true
+    end
+    it 'returns false if the sign_in was after 11:00 and before 11:30' do
+      sign_in = FactoryGirl.create(
+        :newcomer_sign_in,
+        sign_in_time: DateTime.new(2017, 1, 2, 11, 29, 0))
+      expect(sign_in.late?).to be false
+    end
+    it 'returns true if the sign_in was after 11:30' do
+      sign_in = FactoryGirl.create(
+        :newcomer_sign_in,
+        sign_in_time: DateTime.new(2017, 1, 2, 11, 30, 1))
+      expect(sign_in.late?).to be true
+    end
+  end
+
   #
   # Import tests
   #
