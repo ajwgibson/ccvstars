@@ -175,6 +175,26 @@ RSpec.describe SignIn, type: :model do
     end
   end
 
+  describe 'scope:was_late' do
+    it 'includes records where the time was between 09:30 and 11:00 or after 11:30' do
+      a = FactoryGirl.create(:default_sign_in, sign_in_time: DateTime.new(2017, 3, 12, 9,  30, 0))
+      b = FactoryGirl.create(:default_sign_in, sign_in_time: DateTime.new(2017, 3, 12, 9,  30, 1))
+      c = FactoryGirl.create(:default_sign_in, sign_in_time: DateTime.new(2017, 3, 12, 10, 59, 59))
+      d = FactoryGirl.create(:default_sign_in, sign_in_time: DateTime.new(2017, 3, 12, 11, 00, 0))
+      e = FactoryGirl.create(:default_sign_in, sign_in_time: DateTime.new(2017, 3, 12, 11, 30, 0))
+      f = FactoryGirl.create(:default_sign_in, sign_in_time: DateTime.new(2017, 3, 12, 11, 30, 1))
+
+      filtered = SignIn.was_late(true)
+
+      expect(filtered).not_to include(a)
+      expect(filtered).to     include(b)
+      expect(filtered).to     include(c)
+      expect(filtered).not_to include(d)
+      expect(filtered).not_to include(e)
+      expect(filtered).to     include(f)
+    end
+  end
+
 
   #
   # late? tests

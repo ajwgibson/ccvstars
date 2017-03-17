@@ -26,6 +26,8 @@ class SignIn < ActiveRecord::Base
   scope :on_or_after,     ->(value) { where("sign_in_time >= ?",  value.beginning_of_day) }
   scope :on_or_before,    ->(value) { where("sign_in_time < ?",   value.end_of_day) }
   scope :for_today,       ->()      { where("date(sign_in_time) = ?", Date.today) }
+  scope :was_late,        ->(value) { where(
+    "(pg_catalog.time(sign_in_time) > time '09:30' AND pg_catalog.time(sign_in_time) < time '11:00') OR pg_catalog.time(sign_in_time) > time '11:30'")  }
 
 
   def skip_child_validation?

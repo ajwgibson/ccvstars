@@ -98,6 +98,15 @@ RSpec.describe SignInsController, type: :controller do
       expect(assigns(:sign_ins)).to eq([a])
     end
 
+    it "applies the 'was_late' filter" do
+      a = FactoryGirl.create(:default_sign_in, sign_in_time: DateTime.new(2017, 3, 12, 9, 29, 0))
+      b = FactoryGirl.create(:default_sign_in, sign_in_time: DateTime.new(2017, 3, 12, 9, 31, 0))
+
+      get :index, :was_late => true
+
+      expect(assigns(:sign_ins)).to eq([b])
+    end
+
     it "stores filters to the session" do
       get :index, :with_first_name => 'a', :with_last_name => 'a'
       expect(session[:filter_sign_ins]).to eq({'with_first_name' => 'a', 'with_last_name' => 'a'})

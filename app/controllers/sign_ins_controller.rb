@@ -146,7 +146,8 @@ private
           :in_room,
           :on_or_after,
           :on_or_before,
-          :order_by
+          :order_by,
+          :was_late
         )
 
       @filter = session[:filter_sign_ins].symbolize_keys! if @filter.empty? && session.key?(:filter_sign_ins)

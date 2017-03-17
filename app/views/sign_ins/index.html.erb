@@ -21,7 +21,7 @@
 
             <%= hidden_field_tag :order_by, @filter[:order_by] %>
 
-            <div class="col-sm-12">
+            <div class="col-md-12">
               <div class="panel panel-default">
 
                 <div class="panel-heading">
@@ -29,70 +29,78 @@
                 </div>
 
                 <div class="panel-body">
-
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <%= label_tag :with_first_name, 'First name contains', :class => 'control-label' %>
-                      <%= text_field_tag :with_first_name, @filter[:with_first_name], :class => 'form-control' %>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <%= label_tag :with_first_name, 'First name contains', :class => 'control-label' %>
+                        <%= text_field_tag :with_first_name, @filter[:with_first_name], :class => 'form-control' %>
+                      </div>
+                      <div class="form-group">
+                        <%= label_tag :with_last_name, 'Last name contains', :class => 'control-label' %>
+                        <%= text_field_tag :with_last_name, @filter[:with_last_name], :class => 'form-control' %>
+                      </div>
                     </div>
-
-                    <div class="form-group">
-                      <%= label_tag :with_last_name, 'Last name contains', :class => 'control-label' %>
-                      <%= text_field_tag :with_last_name, @filter[:with_last_name], :class => 'form-control' %>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="form-group col-md-12">
+                          <%= label_tag :in_room, 'Room', :class => 'control-label' %>
+                          <%= select_tag :in_room,
+                                options_for_select(@rooms, @filter[:in_room]),
+                                include_blank: true,
+                                :class => 'form-control' %>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-xs-6">
+                          <%= label_tag :is_newcomer, 'Newcomer?', :class => 'control-label' %>
+                          <div class="checkbox checkbox-primary">
+                            <%= check_box_tag :is_newcomer, 1, @filter[:is_newcomer] %>
+                            <%= label_tag :is_newcomer, 'Yes' %>
+                          </div>
+                        </div>
+                        <div class="form-group col-xs-6">
+                          <%= label_tag :was_late, 'Late?', :class => 'control-label' %>
+                          <div class="checkbox checkbox-primary">
+                            <%= check_box_tag :was_late, 1, @filter[:was_late] %>
+                            <%= label_tag :was_late, 'Yes' %>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <%= label_tag :in_room, 'Room', :class => 'control-label' %>
-                      <%= select_tag :in_room,
-                            options_for_select(@rooms, @filter[:in_room]),
-                            include_blank: true,
-                            :class => 'form-control' %>
-                    </div>
-                    <div class="form-group">
-                      <%= label_tag :is_newcomer, 'Newcomer', :class => 'control-label' %>
-                      <div class="checkbox checkbox-primary">
-                        <%= check_box_tag :is_newcomer, 1, @filter[:is_newcomer] %>
-                        <%= label_tag :is_newcomer, 'Yes' %>
+                    <div class="col-md-4">
+                      <div class="form-group date days">
+                        <%= label_tag :on_or_after, 'On or after', :class => 'control-label' %>
+                        <div class="input-group date">
+                          <span class="input-group-addon date"><i class="fa fa-calendar"></i></span>
+                          <%= text_field_tag :on_or_after,
+                                            (l(@filter[:on_or_after], :format => :date) if @filter.has_key?(:on_or_after)),
+                                            :placeholder => 'dd/mm/yyyy',
+                                            :class => 'form-control date' %>
+                        </div>
+                      </div>
+                      <div class="form-group date days">
+                        <%= label_tag :on_or_before, 'On or before', :class => 'control-label' %>
+                        <div class="input-group date">
+                          <span class="input-group-addon date"><i class="fa fa-calendar"></i></span>
+                          <%= text_field_tag :on_or_before,
+                                            (l(@filter[:on_or_before], :format => :date) if @filter.has_key?(:on_or_before)),
+                                            :placeholder => 'dd/mm/yyyy',
+                                            :class => 'form-control date' %>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="col-sm-4">
-                    <div class="form-group date days">
-                      <%= label_tag :on_or_after, 'On or after', :class => 'control-label' %>
-                      <div class="input-group date">
-                        <span class="input-group-addon date"><i class="fa fa-calendar"></i></span>
-                        <%= text_field_tag :on_or_after,
-                                          (l(@filter[:on_or_after], :format => :date) if @filter.has_key?(:on_or_after)),
-                                          :placeholder => 'dd/mm/yyyy',
-                                          :class => 'form-control date' %>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group pull-right">
+                        <%= link_to sign_ins_clear_filter_path, :class => 'btn btn-default' do %>
+                          <i class="fa fa-times"></i> Clear filter
+                        <% end %>
+                        <%= button_tag(type: "submit", class: "btn btn-primary") do %>
+                          <i class="fa fa-filter"></i> Apply filter
+                        <% end %>
                       </div>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-4">
-                    <div class="form-group date days">
-                      <%= label_tag :on_or_before, 'On or before', :class => 'control-label' %>
-                      <div class="input-group date">
-                        <span class="input-group-addon date"><i class="fa fa-calendar"></i></span>
-                        <%= text_field_tag :on_or_before,
-                                          (l(@filter[:on_or_before], :format => :date) if @filter.has_key?(:on_or_before)),
-                                          :placeholder => 'dd/mm/yyyy',
-                                          :class => 'form-control date' %>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-12">
-                    <div class="form-group pull-right">
-                      <%= link_to sign_ins_clear_filter_path, :class => 'btn btn-default' do %>
-                        <i class="fa fa-times"></i> Clear filter
-                      <% end %>
-                      <%= button_tag(type: "submit", class: "btn btn-primary") do %>
-                        <i class="fa fa-filter"></i> Apply filter
-                      <% end %>
                     </div>
                   </div>
 
@@ -112,47 +120,49 @@
             <i class="fa fa-upload"></i> Import records
           <% end %>
 
-          <table class="table table-striped">
+          <div class="table-responsive">
+            <table class="table table-striped table-responsive">
 
-            <thead>
-              <tr>
-                <th><%= sortable 'last_name,first_name', @filter, sign_ins_path, 'Name' %></th>
-                <th><%= sortable 'room', @filter, sign_ins_path, 'Room' %></th>
-                <th><%= sortable 'sign_in_time', @filter, sign_ins_path, 'Date & time' %></th>
-                <th>Label</th>
-                <th>Newcomer?</th>
-                <th>Links</th>
-              </tr>
-            </thead>
+              <thead>
+                <tr>
+                  <th><%= sortable 'last_name,first_name', @filter, sign_ins_path, 'Name' %></th>
+                  <th><%= sortable 'room', @filter, sign_ins_path, 'Room' %></th>
+                  <th><%= sortable 'sign_in_time', @filter, sign_ins_path, 'Date & time' %></th>
+                  <th>Label</th>
+                  <th>Newcomer?</th>
+                  <th>Links</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              <% @sign_ins.each do |sign_in| %>
-              <tr>
-                <td><%= sign_in.name %> </td>
-                <td><%= sign_in.room %> </td>
-                <td><%= l(sign_in.sign_in_time, :format => :short) %> <%= late_icon sign_in.late? %> </td>
-                <td><%= sign_in.label %> </td>
-                <td><%= check_icon sign_in.newcomer %> </td>
-                <td>
-                  <%= link_to sign_in_path(sign_in), :class => '' do %>
-                  <i class="fa fa-info-circle"></i> View details
-                  <% end %>
-                </td>
-              </tr>
-              <% end %>
-            </tbody>
+              <tbody>
+                <% @sign_ins.each do |sign_in| %>
+                <tr>
+                  <td><%= sign_in.name %> </td>
+                  <td><%= sign_in.room %> </td>
+                  <td><%= l(sign_in.sign_in_time, :format => :short) %> <%= late_icon sign_in.late? %> </td>
+                  <td><%= sign_in.label %> </td>
+                  <td><%= check_icon sign_in.newcomer %> </td>
+                  <td>
+                    <%= link_to sign_in_path(sign_in), :class => '' do %>
+                    <i class="fa fa-info-circle"></i> View details
+                    <% end %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
 
-            <tfoot>
-              <tr>
-                <td colspan="6">
-                  <div class="pull-right">
-                    <%= paginate @sign_ins %>
-                  </div>
-                </td>
-              </tr>
-            </tfoot>
+              <tfoot>
+                <tr>
+                  <td colspan="6">
+                    <div class="pull-right">
+                      <%= paginate @sign_ins %>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
 
-          </table>
+            </table>
+          </div>
 
         </div>
       </div>
